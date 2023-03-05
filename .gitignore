@@ -9,8 +9,8 @@ NTC.xlsx
 ntc1.c
 *.xlsx
 CANet*/
-*/production
-nbproject
+*/nbproject
 Makefile
 */build
 */dist
+*/debug
