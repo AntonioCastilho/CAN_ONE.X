@@ -1,0 +1,2179 @@
+
+
+Microchip MPLAB XC8 Assembler V2.40 build 20220703182018 
+                                                                                               Sun Mar 05 12:51:25 2023
+
+Microchip MPLAB XC8 C Compiler v2.40 (Free license) build 20220703182018 Og1 
+     1                           	processor	18F4550
+     2                           	fnconf	rparam,??,?,0
+     3                           	pagewidth 120
+     4                           	opt	flic
+     5                           	psect	cinit,global,reloc=2,class=CODE,delta=1
+     6                           	psect	bssCOMRAM,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     7                           	psect	cstackCOMRAM,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     8                           	psect	text0,global,reloc=2,class=CODE,delta=1
+     9                           	psect	text1,global,reloc=2,class=CODE,delta=1
+    10                           	psect	text2,global,reloc=2,class=CODE,delta=1
+    11                           	psect	text3,global,reloc=2,class=CODE,delta=1
+    12                           	psect	text4,global,reloc=2,class=CODE,delta=1
+    13                           	psect	text5,global,reloc=2,class=CODE,delta=1
+    14                           	psect	text6,global,reloc=2,class=CODE,delta=1
+    15                           	psect	text7,global,reloc=2,class=CODE,delta=1
+    16                           	psect	text8,global,reloc=2,class=CODE,delta=1
+    17                           	psect	text9,global,reloc=2,class=CODE,delta=1
+    18                           	psect	text10,global,reloc=2,class=CODE,delta=1
+    19                           	psect	text11,global,reloc=2,class=CODE,delta=1
+    20                           	psect	text12,global,reloc=2,class=CODE,delta=1
+    21                           	psect	text13,global,reloc=2,class=CODE,delta=1
+    22                           	psect	intsave_regs,global,class=BIGRAM,space=1,delta=1,noexec
+    23                           	psect	rparam,global,class=COMRAM,space=1,delta=1,noexec
+    24                           	psect	idloc,global,abs,ovrld,class=IDLOC,space=5,delta=1,noexec
+    25                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=1,noexec
+    26   000000                     
+    27                           ; Version 2.40
+    28                           ; Generated 17/11/2021 GMT
+    29                           ; 
+    30                           ; Copyright © 2021, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    31                           ; All rights reserved.
+    32                           ; 
+    33                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    34                           ; 
+    35                           ; Redistribution and use in source and binary forms, with or without modification, are
+    36                           ; permitted provided that the following conditions are met:
+    37                           ; 
+    38                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    39                           ;        conditions and the following disclaimer.
+    40                           ; 
+    41                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    42                           ;        of conditions and the following disclaimer in the documentation and/or other
+    43                           ;        materials provided with the distribution. Publication is not required when
+    44                           ;        this file is used in an embedded application.
+    45                           ; 
+    46                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    47                           ;        software without specific prior written permission.
+    48                           ; 
+    49                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    50                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    51                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    52                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    53                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    54                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    55                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    56                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    57                           ; 
+    58                           ; 
+    59                           ; Code-generator required, PIC18F4550 Definitions
+    60                           ; 
+    61                           ; SFR Addresses
+    62   000000                     _SSPSTATbits	set	4039
+    63   000000                     _TRISBbits	set	3987
+    64   000000                     _LATB	set	3978
+    65   000000                     _PORTAbits	set	3968
+    66   000000                     _LATBbits	set	3978
+    67   000000                     _TRISAbits	set	3986
+    68   000000                     _TRISB	set	3987
+    69   000000                     _OSCCON	set	4051
+    70   000000                     _PIR1bits	set	3998
+    71   000000                     _ADCON1	set	4033
+    72   000000                     _ADCON0	set	4034
+    73   000000                     _SSPCON1	set	4038
+    74   000000                     _SSPSTAT	set	4039
+    75   000000                     _TRISCbits	set	3988
+    76   000000                     _SSPBUF	set	4041
+    77                           
+    78                           ; #config settings
+    79                           
+    80                           	psect	cinit
+    81   005DAC                     __pcinit:
+    82                           	callstack 0
+    83   005DAC                     start_initialization:
+    84                           	callstack 0
+    85   005DAC                     __initialization:
+    86                           	callstack 0
+    87                           
+    88                           ; Clear objects allocated to COMRAM (36 bytes)
+    89   005DAC  EE00  F001         	lfsr	0,__pbssCOMRAM
+    90   005DB0  0E24               	movlw	36
+    91   005DB2                     clear_0:
+    92   005DB2  6AEE               	clrf	postinc0,c
+    93   005DB4  06E8               	decf	wreg,f,c
+    94   005DB6  E1FD               	bnz	clear_0
+    95   005DB8                     end_of_initialization:
+    96                           	callstack 0
+    97   005DB8                     __end_of__initialization:
+    98                           	callstack 0
+    99   005DB8  0E00               	movlw	low (__Lmediumconst shr (0+16))
+   100   005DBA  6EF8               	movwf	tblptru,c
+   101   005DBC  0100               	movlb	0
+   102   005DBE  EF88  F02F         	goto	_main	;jump to C main() function
+   103                           
+   104                           	psect	bssCOMRAM
+   105   000001                     __pbssCOMRAM:
+   106                           	callstack 0
+   107   000001                     _canMessageReceived:
+   108                           	callstack 0
+   109   000001                     	ds	10
+   110   00000B                     _canMessageSend:
+   111                           	callstack 0
+   112   00000B                     	ds	10
+   113   000015                     _dataSend:
+   114                           	callstack 0
+   115   000015                     	ds	8
+   116   00001D                     _dataRead:
+   117                           	callstack 0
+   118   00001D                     	ds	8
+   119                           
+   120                           	psect	cstackCOMRAM
+   121   000025                     __pcstackCOMRAM:
+   122                           	callstack 0
+   123   000025                     SPI_send@data:
+   124                           	callstack 0
+   125   000025                     SPI_receive@data:
+   126                           	callstack 0
+   127   000025                     delayMS@time:
+   128                           	callstack 0
+   129   000025                     delayUS@time:
+   130                           	callstack 0
+   131                           
+   132                           ; 2 bytes @ 0x0
+   133   000025                     	ds	1
+   134   000026                     mcp2515WriteRegister@value:
+   135                           	callstack 0
+   136   000026                     mcp2515ReadRegister@address:
+   137                           	callstack 0
+   138   000026                     mcp2515BitChange@maskBit:
+   139                           	callstack 0
+   140                           
+   141                           ; 1 bytes @ 0x1
+   142   000026                     	ds	1
+   143   000027                     mcp2515WriteRegister@address:
+   144                           	callstack 0
+   145   000027                     mcp2515ReadRegister@buffer:
+   146                           	callstack 0
+   147   000027                     mcp2515BitChange@valueNew:
+   148                           	callstack 0
+   149   000027                     delayMS@i:
+   150                           	callstack 0
+   151   000027                     delayUS@i:
+   152                           	callstack 0
+   153                           
+   154                           ; 2 bytes @ 0x2
+   155   000027                     	ds	1
+   156   000028                     mcp2515BitChange@addressReg:
+   157                           	callstack 0
+   158   000028                     canRead@data:
+   159                           	callstack 0
+   160                           
+   161                           ; 2 bytes @ 0x3
+   162   000028                     	ds	1
+   163   000029                     canSend@id:
+   164                           	callstack 0
+   165   000029                     delayMS@ms:
+   166                           	callstack 0
+   167                           
+   168                           ; 2 bytes @ 0x4
+   169   000029                     	ds	1
+   170   00002A                     ??_canRead:
+   171   00002A                     canSend@lenght:
+   172                           	callstack 0
+   173                           
+   174                           ; 1 bytes @ 0x5
+   175   00002A                     	ds	1
+   176   00002B                     ??_mcp2515Start:
+   177   00002B                     canSend@data:
+   178                           	callstack 0
+   179                           
+   180                           ; 2 bytes @ 0x6
+   181   00002B                     	ds	1
+   182   00002C                     canRead@i:
+   183                           	callstack 0
+   184                           
+   185                           ; 1 bytes @ 0x7
+   186   00002C                     	ds	1
+   187   00002D                     mcp2515Start@i:
+   188                           	callstack 0
+   189   00002D                     canSend@txb:
+   190                           	callstack 0
+   191   00002D                     canRead@i_426:
+   192                           	callstack 0
+   193                           
+   194                           ; 1 bytes @ 0x8
+   195   00002D                     	ds	1
+   196   00002E                     mcp2515Start@i_398:
+   197                           	callstack 0
+   198   00002E                     canSend@i:
+   199                           	callstack 0
+   200   00002E                     canRead@lenght:
+   201                           	callstack 0
+   202                           
+   203                           ; 1 bytes @ 0x9
+   204   00002E                     	ds	1
+   205   00002F                     mcp2515Start@i_399:
+   206                           	callstack 0
+   207   00002F                     canSend@i_418:
+   208                           	callstack 0
+   209   00002F                     canRead@id:
+   210                           	callstack 0
+   211                           
+   212                           ; 1 bytes @ 0xA
+   213   00002F                     	ds	1
+   214   000030                     canSend@i_419:
+   215                           	callstack 0
+   216                           
+   217                           ; 1 bytes @ 0xB
+   218   000030                     	ds	1
+   219   000031                     
+   220                           ; 1 bytes @ 0xC
+   221 ;;
+   222 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   223 ;;
+   224 ;; *************** function _main *****************
+   225 ;; Defined at:
+   226 ;;		line 22 in file "main.c"
+   227 ;; Parameters:    Size  Location     Type
+   228 ;;		None
+   229 ;; Auto vars:     Size  Location     Type
+   230 ;;		None
+   231 ;; Return value:  Size  Location     Type
+   232 ;;                  1    wreg      void 
+   233 ;; Registers used:
+   234 ;;		wreg, fsr2l, fsr2h, status,2, status,0, cstack
+   235 ;; Tracked objects:
+   236 ;;		On entry : 0/0
+   237 ;;		On exit  : 0/0
+   238 ;;		Unchanged: 0/0
+   239 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   240 ;;      Params:         0       0       0       0       0       0       0       0       0
+   241 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   242 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   243 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   244 ;;Total ram usage:        0 bytes
+   245 ;; Hardware stack levels required when called: 4
+   246 ;; This function calls:
+   247 ;;		_canRead
+   248 ;;		_canSend
+   249 ;;		_delayMS
+   250 ;;		_hardware_ini
+   251 ;; This function is called by:
+   252 ;;		Startup code after reset
+   253 ;; This function uses a non-reentrant model
+   254 ;;
+   255                           
+   256                           	psect	text0
+   257   005F10                     __ptext0:
+   258                           	callstack 0
+   259   005F10                     _main:
+   260                           	callstack 27
+   261   005F10                     
+   262                           ;main.c: 24: hardware_ini();
+   263   005F10  EC48  F02F         	call	_hardware_ini	;wreg free
+   264   005F14                     
+   265                           ;main.c: 26: dataSend[0] = 0xAB;
+   266   005F14  0EAB               	movlw	171
+   267   005F16  6E15               	movwf	_dataSend^0,c
+   268   005F18                     
+   269                           ;main.c: 28: canMessageSend.dlc = 8;
+   270   005F18  0E08               	movlw	8
+   271   005F1A  6E0C               	movwf	(_canMessageSend+1)^0,c
+   272   005F1C                     l1491:
+   273                           
+   274                           ;main.c: 51: {;main.c: 54: canSend(0, 0x10, 8, dataSend);
+   275   005F1C  0E10               	movlw	16
+   276   005F1E  6E29               	movwf	canSend@id^0,c
+   277   005F20  0E08               	movlw	8
+   278   005F22  6E2A               	movwf	canSend@lenght^0,c
+   279   005F24  0E15               	movlw	low _dataSend
+   280   005F26  6E2B               	movwf	canSend@data^0,c
+   281   005F28  0E00               	movlw	high _dataSend
+   282   005F2A  6E2C               	movwf	(canSend@data+1)^0,c
+   283   005F2C  0E00               	movlw	0
+   284   005F2E  EC0D  F030         	call	_canSend
+   285   005F32                     
+   286                           ;main.c: 58: LATBbits.LATB6 = 0;
+   287   005F32  9C8A               	bcf	138,6,c	;volatile
+   288   005F34                     
+   289                           ;main.c: 59: delayMS(100);
+   290   005F34  0E00               	movlw	0
+   291   005F36  6E26               	movwf	(delayMS@time+1)^0,c
+   292   005F38  0E64               	movlw	100
+   293   005F3A  6E25               	movwf	delayMS@time^0,c
+   294   005F3C  EC63  F02F         	call	_delayMS	;wreg free
+   295   005F40                     
+   296                           ;main.c: 63: LATBbits.LATB6 = 1;
+   297   005F40  8C8A               	bsf	138,6,c	;volatile
+   298                           
+   299                           ;main.c: 64: canRead(0x20, dataRead);
+   300   005F42  0E1D               	movlw	low _dataRead
+   301   005F44  6E28               	movwf	canRead@data^0,c
+   302   005F46  0E00               	movlw	high _dataRead
+   303   005F48  6E29               	movwf	(canRead@data+1)^0,c
+   304   005F4A  0E20               	movlw	32
+   305   005F4C  ECB2  F02F         	call	_canRead
+   306   005F50                     
+   307                           ;main.c: 68: delayMS(100);
+   308   005F50  0E00               	movlw	0
+   309   005F52  6E26               	movwf	(delayMS@time+1)^0,c
+   310   005F54  0E64               	movlw	100
+   311   005F56  6E25               	movwf	delayMS@time^0,c
+   312   005F58  EC63  F02F         	call	_delayMS	;wreg free
+   313   005F5C  EF8E  F02F         	goto	l1491
+   314   005F60  EF00  F000         	goto	start
+   315   005F64                     __end_of_main:
+   316                           	callstack 0
+   317                           
+   318 ;; *************** function _hardware_ini *****************
+   319 ;; Defined at:
+   320 ;;		line 25 in file "hardware.c"
+   321 ;; Parameters:    Size  Location     Type
+   322 ;;		None
+   323 ;; Auto vars:     Size  Location     Type
+   324 ;;		None
+   325 ;; Return value:  Size  Location     Type
+   326 ;;                  1    wreg      void 
+   327 ;; Registers used:
+   328 ;;		wreg, status,2, status,0, cstack
+   329 ;; Tracked objects:
+   330 ;;		On entry : 0/0
+   331 ;;		On exit  : 0/0
+   332 ;;		Unchanged: 0/0
+   333 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   334 ;;      Params:         0       0       0       0       0       0       0       0       0
+   335 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   336 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   337 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   338 ;;Total ram usage:        0 bytes
+   339 ;; Hardware stack levels used: 1
+   340 ;; Hardware stack levels required when called: 3
+   341 ;; This function calls:
+   342 ;;		_SPI_ini
+   343 ;;		_delayMS
+   344 ;;		_mcp2515Start
+   345 ;; This function is called by:
+   346 ;;		_main
+   347 ;; This function uses a non-reentrant model
+   348 ;;
+   349                           
+   350                           	psect	text1
+   351   005E90                     __ptext1:
+   352                           	callstack 0
+   353   005E90                     _hardware_ini:
+   354                           	callstack 27
+   355   005E90                     
+   356                           ;hardware.c: 27: OSCCON = 0x72;
+   357   005E90  0E72               	movlw	114
+   358   005E92  6ED3               	movwf	211,c	;volatile
+   359                           
+   360                           ;hardware.c: 30: TRISB = 0X00;
+   361   005E94  0E00               	movlw	0
+   362   005E96  6E93               	movwf	147,c	;volatile
+   363   005E98                     
+   364                           ;hardware.c: 31: LATB = 0XFF;
+   365   005E98  688A               	setf	138,c	;volatile
+   366   005E9A                     
+   367                           ;hardware.c: 34: TRISBbits.TRISB1 = 0;
+   368   005E9A  9293               	bcf	147,1,c	;volatile
+   369   005E9C                     
+   370                           ;hardware.c: 35: TRISCbits.TRISC7 = 0;
+   371   005E9C  9E94               	bcf	148,7,c	;volatile
+   372   005E9E                     
+   373                           ;hardware.c: 36: TRISAbits.TRISA5 = 0;
+   374   005E9E  9A92               	bcf	146,5,c	;volatile
+   375   005EA0                     
+   376                           ;hardware.c: 37: TRISBbits.TRISB0 = 1;
+   377   005EA0  8093               	bsf	147,0,c	;volatile
+   378   005EA2                     
+   379                           ;hardware.c: 38: TRISBbits.TRISB2 = 1;
+   380   005EA2  8493               	bsf	147,2,c	;volatile
+   381   005EA4                     
+   382                           ;hardware.c: 54: SPI_ini();
+   383   005EA4  ECCC  F02E         	call	_SPI_ini	;wreg free
+   384   005EA8                     
+   385                           ;hardware.c: 55: delayMS(100);
+   386   005EA8  0E00               	movlw	0
+   387   005EAA  6E26               	movwf	(delayMS@time+1)^0,c
+   388   005EAC  0E64               	movlw	100
+   389   005EAE  6E25               	movwf	delayMS@time^0,c
+   390   005EB0  EC63  F02F         	call	_delayMS	;wreg free
+   391   005EB4                     
+   392                           ;hardware.c: 56: mcp2515Start();
+   393   005EB4  ECAE  F030         	call	_mcp2515Start	;wreg free
+   394   005EB8                     
+   395                           ;hardware.c: 57: delayMS(100);
+   396   005EB8  0E00               	movlw	0
+   397   005EBA  6E26               	movwf	(delayMS@time+1)^0,c
+   398   005EBC  0E64               	movlw	100
+   399   005EBE  6E25               	movwf	delayMS@time^0,c
+   400   005EC0  EC63  F02F         	call	_delayMS	;wreg free
+   401   005EC4  0012               	return		;funcret
+   402   005EC6                     __end_of_hardware_ini:
+   403                           	callstack 0
+   404                           
+   405 ;; *************** function _mcp2515Start *****************
+   406 ;; Defined at:
+   407 ;;		line 138 in file "can.c"
+   408 ;; Parameters:    Size  Location     Type
+   409 ;;		None
+   410 ;; Auto vars:     Size  Location     Type
+   411 ;;  i               1   10[COMRAM] unsigned char 
+   412 ;;  i               1    9[COMRAM] unsigned char 
+   413 ;;  i               1    8[COMRAM] unsigned char 
+   414 ;; Return value:  Size  Location     Type
+   415 ;;                  1    wreg      void 
+   416 ;; Registers used:
+   417 ;;		wreg, status,2, status,0, cstack
+   418 ;; Tracked objects:
+   419 ;;		On entry : 0/0
+   420 ;;		On exit  : 0/0
+   421 ;;		Unchanged: 0/0
+   422 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   423 ;;      Params:         0       0       0       0       0       0       0       0       0
+   424 ;;      Locals:         3       0       0       0       0       0       0       0       0
+   425 ;;      Temps:          2       0       0       0       0       0       0       0       0
+   426 ;;      Totals:         5       0       0       0       0       0       0       0       0
+   427 ;;Total ram usage:        5 bytes
+   428 ;; Hardware stack levels used: 1
+   429 ;; Hardware stack levels required when called: 2
+   430 ;; This function calls:
+   431 ;;		_delayMS
+   432 ;;		_delayUS
+   433 ;;		_mcp2515BitChange
+   434 ;;		_mcp2515ReadRegister
+   435 ;;		_mcp2515Reset
+   436 ;;		_mcp2515WriteRegister
+   437 ;; This function is called by:
+   438 ;;		_hardware_ini
+   439 ;; This function uses a non-reentrant model
+   440 ;;
+   441                           
+   442                           	psect	text2
+   443   00615C                     __ptext2:
+   444                           	callstack 0
+   445   00615C                     _mcp2515Start:
+   446                           	callstack 27
+   447   00615C                     
+   448                           ;can.c: 142: delayMS(20);
+   449   00615C  0E00               	movlw	0
+   450   00615E  6E26               	movwf	(delayMS@time+1)^0,c
+   451   006160  0E14               	movlw	20
+   452   006162  6E25               	movwf	delayMS@time^0,c
+   453   006164  EC63  F02F         	call	_delayMS	;wreg free
+   454                           
+   455                           ;can.c: 143: mcp2515Reset();
+   456   006168  ECE1  F02E         	call	_mcp2515Reset	;wreg free
+   457                           
+   458                           ;can.c: 144: delayUS(20);
+   459   00616C  0E00               	movlw	0
+   460   00616E  6E26               	movwf	(delayUS@time+1)^0,c
+   461   006170  0E14               	movlw	20
+   462   006172  6E25               	movwf	delayUS@time^0,c
+   463   006174  EC34  F02F         	call	_delayUS	;wreg free
+   464   006178                     
+   465                           ;can.c: 145: mcp2515BitChange(0x0F, (0b11100000), (0b01000000));
+   466   006178  0EE0               	movlw	224
+   467   00617A  6E26               	movwf	mcp2515BitChange@maskBit^0,c
+   468   00617C  0E40               	movlw	64
+   469   00617E  6E27               	movwf	mcp2515BitChange@valueNew^0,c
+   470   006180  0E0F               	movlw	15
+   471   006182  EC24  F02F         	call	_mcp2515BitChange
+   472   006186                     
+   473                           ;can.c: 146: delayUS(20);
+   474   006186  0E00               	movlw	0
+   475   006188  6E26               	movwf	(delayUS@time+1)^0,c
+   476   00618A  0E14               	movlw	20
+   477   00618C  6E25               	movwf	delayUS@time^0,c
+   478   00618E  EC34  F02F         	call	_delayUS	;wreg free
+   479   006192                     l1327:
+   480   006192  0E0E               	movlw	14
+   481   006194  EC16  F02F         	call	_mcp2515ReadRegister
+   482   006198  6E2B               	movwf	??_mcp2515Start^0,c
+   483   00619A  0E05               	movlw	5
+   484   00619C  6E2C               	movwf	(??_mcp2515Start+1)^0,c
+   485   00619E                     u285:
+   486   00619E  90D8               	bcf	status,0,c
+   487   0061A0  322B               	rrcf	??_mcp2515Start^0,f,c
+   488   0061A2  2E2C               	decfsz	(??_mcp2515Start+1)^0,f,c
+   489   0061A4  EFCF  F030         	goto	u285
+   490   0061A8  0E02               	movlw	2
+   491   0061AA  182B               	xorwf	??_mcp2515Start^0,w,c
+   492   0061AC  A4D8               	btfss	status,2,c
+   493   0061AE  EFDB  F030         	goto	u291
+   494   0061B2  EFDD  F030         	goto	u290
+   495   0061B6                     u291:
+   496   0061B6  EFC9  F030         	goto	l1327
+   497   0061BA                     u290:
+   498   0061BA                     
+   499                           ;can.c: 151: mcp2515WriteRegister(0x2A, 0x01);
+   500   0061BA  0E01               	movlw	1
+   501   0061BC  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   502   0061BE  0E2A               	movlw	42
+   503   0061C0  ECED  F02E         	call	_mcp2515WriteRegister
+   504                           
+   505                           ;can.c: 152: mcp2515WriteRegister(0x29, 0xF1);
+   506   0061C4  0EF1               	movlw	241
+   507   0061C6  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   508   0061C8  0E29               	movlw	41
+   509   0061CA  ECED  F02E         	call	_mcp2515WriteRegister
+   510                           
+   511                           ;can.c: 153: mcp2515WriteRegister(0x28, 0xC5);
+   512   0061CE  0EC5               	movlw	197
+   513   0061D0  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   514   0061D2  0E28               	movlw	40
+   515   0061D4  ECED  F02E         	call	_mcp2515WriteRegister
+   516                           
+   517                           ;can.c: 156: mcp2515WriteRegister(0x30, 0x00);
+   518   0061D8  0E00               	movlw	0
+   519   0061DA  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   520   0061DC  0E30               	movlw	48
+   521   0061DE  ECED  F02E         	call	_mcp2515WriteRegister
+   522                           
+   523                           ;can.c: 157: mcp2515WriteRegister(0x40, 0x00);
+   524   0061E2  0E00               	movlw	0
+   525   0061E4  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   526   0061E6  0E40               	movlw	64
+   527   0061E8  ECED  F02E         	call	_mcp2515WriteRegister
+   528                           
+   529                           ;can.c: 158: mcp2515WriteRegister(0x50, 0x00);
+   530   0061EC  0E00               	movlw	0
+   531   0061EE  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   532   0061F0  0E50               	movlw	80
+   533   0061F2  ECED  F02E         	call	_mcp2515WriteRegister
+   534                           
+   535                           ;can.c: 161: mcp2515WriteRegister(0x60, 0x60);
+   536   0061F6  0E60               	movlw	96
+   537   0061F8  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   538   0061FA  0E60               	movlw	96
+   539   0061FC  ECED  F02E         	call	_mcp2515WriteRegister
+   540                           
+   541                           ;can.c: 162: mcp2515WriteRegister(0x70, 0x60);
+   542   006200  0E60               	movlw	96
+   543   006202  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   544   006204  0E70               	movlw	112
+   545   006206  ECED  F02E         	call	_mcp2515WriteRegister
+   546                           
+   547                           ;can.c: 163: mcp2515WriteRegister(0x0C, 0x00);
+   548   00620A  0E00               	movlw	0
+   549   00620C  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   550   00620E  0E0C               	movlw	12
+   551   006210  ECED  F02E         	call	_mcp2515WriteRegister
+   552   006214                     
+   553                           ;can.c: 166: for (uint8_t i =0; i < 12; i++)
+   554   006214  0E00               	movlw	0
+   555   006216  6E2D               	movwf	mcp2515Start@i^0,c
+   556   006218                     l1337:
+   557                           
+   558                           ;can.c: 167: mcp2515WriteRegister((0x00 + i), 0x00);
+   559   006218  0E00               	movlw	0
+   560   00621A  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   561   00621C  502D               	movf	mcp2515Start@i^0,w,c
+   562   00621E  ECED  F02E         	call	_mcp2515WriteRegister
+   563   006222  2A2D               	incf	mcp2515Start@i^0,f,c
+   564   006224  0E0B               	movlw	11
+   565   006226  642D               	cpfsgt	mcp2515Start@i^0,c
+   566   006228  EF18  F031         	goto	u301
+   567   00622C  EF1A  F031         	goto	u300
+   568   006230                     u301:
+   569   006230  EF0C  F031         	goto	l1337
+   570   006234                     u300:
+   571   006234                     
+   572                           ;can.c: 169: for (uint8_t i = 0; i < 12; i++)
+   573   006234  0E00               	movlw	0
+   574   006236  6E2E               	movwf	mcp2515Start@i_398^0,c
+   575   006238                     l1349:
+   576                           
+   577                           ;can.c: 170: mcp2515WriteRegister((0x10 + i), 0x00);
+   578   006238  0E00               	movlw	0
+   579   00623A  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   580   00623C  502E               	movf	mcp2515Start@i_398^0,w,c
+   581   00623E  0F10               	addlw	16
+   582   006240  ECED  F02E         	call	_mcp2515WriteRegister
+   583   006244  2A2E               	incf	mcp2515Start@i_398^0,f,c
+   584   006246  0E0B               	movlw	11
+   585   006248  642E               	cpfsgt	mcp2515Start@i_398^0,c
+   586   00624A  EF29  F031         	goto	u311
+   587   00624E  EF2B  F031         	goto	u310
+   588   006252                     u311:
+   589   006252  EF1C  F031         	goto	l1349
+   590   006256                     u310:
+   591   006256                     
+   592                           ;can.c: 173: for (uint8_t i = 0; i < 8; i++)
+   593   006256  0E00               	movlw	0
+   594   006258  6E2F               	movwf	mcp2515Start@i_399^0,c
+   595   00625A                     l1361:
+   596                           
+   597                           ;can.c: 174: mcp2515WriteRegister((0x20 + i), 0x00);
+   598   00625A  0E00               	movlw	0
+   599   00625C  6E26               	movwf	mcp2515WriteRegister@value^0,c
+   600   00625E  502F               	movf	mcp2515Start@i_399^0,w,c
+   601   006260  0F20               	addlw	32
+   602   006262  ECED  F02E         	call	_mcp2515WriteRegister
+   603   006266  2A2F               	incf	mcp2515Start@i_399^0,f,c
+   604   006268  0E07               	movlw	7
+   605   00626A  642F               	cpfsgt	mcp2515Start@i_399^0,c
+   606   00626C  EF3A  F031         	goto	u321
+   607   006270  EF3C  F031         	goto	u320
+   608   006274                     u321:
+   609   006274  EF2D  F031         	goto	l1361
+   610   006278                     u320:
+   611   006278                     
+   612                           ;can.c: 179: mcp2515BitChange(0x0F, (0b11111111), (0b00000100));
+   613   006278  0EFF               	movlw	255
+   614   00627A  6E26               	movwf	mcp2515BitChange@maskBit^0,c
+   615   00627C  0E04               	movlw	4
+   616   00627E  6E27               	movwf	mcp2515BitChange@valueNew^0,c
+   617   006280  0E0F               	movlw	15
+   618   006282  EC24  F02F         	call	_mcp2515BitChange
+   619   006286                     l1369:
+   620   006286  0E0E               	movlw	14
+   621   006288  EC16  F02F         	call	_mcp2515ReadRegister
+   622   00628C  6E2B               	movwf	??_mcp2515Start^0,c
+   623   00628E  0E05               	movlw	5
+   624   006290  6E2C               	movwf	(??_mcp2515Start+1)^0,c
+   625   006292                     u335:
+   626   006292  90D8               	bcf	status,0,c
+   627   006294  322B               	rrcf	??_mcp2515Start^0,f,c
+   628   006296  2E2C               	decfsz	(??_mcp2515Start+1)^0,f,c
+   629   006298  EF49  F031         	goto	u335
+   630   00629C  502B               	movf	??_mcp2515Start^0,w,c
+   631   00629E  A4D8               	btfss	status,2,c
+   632   0062A0  EF54  F031         	goto	u341
+   633   0062A4  EF56  F031         	goto	u340
+   634   0062A8                     u341:
+   635   0062A8  EF43  F031         	goto	l1369
+   636   0062AC                     u340:
+   637   0062AC                     
+   638                           ;can.c: 181: LATBbits.LATB7 = 0;
+   639   0062AC  9E8A               	bcf	138,7,c	;volatile
+   640   0062AE  0012               	return		;funcret
+   641   0062B0                     __end_of_mcp2515Start:
+   642                           	callstack 0
+   643                           
+   644 ;; *************** function _mcp2515WriteRegister *****************
+   645 ;; Defined at:
+   646 ;;		line 82 in file "can.c"
+   647 ;; Parameters:    Size  Location     Type
+   648 ;;  address         1    wreg     unsigned char 
+   649 ;;  value           1    1[COMRAM] unsigned char 
+   650 ;; Auto vars:     Size  Location     Type
+   651 ;;  address         1    2[COMRAM] unsigned char 
+   652 ;; Return value:  Size  Location     Type
+   653 ;;                  1    wreg      void 
+   654 ;; Registers used:
+   655 ;;		wreg, status,2, cstack
+   656 ;; Tracked objects:
+   657 ;;		On entry : 0/0
+   658 ;;		On exit  : 0/0
+   659 ;;		Unchanged: 0/0
+   660 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   661 ;;      Params:         1       0       0       0       0       0       0       0       0
+   662 ;;      Locals:         1       0       0       0       0       0       0       0       0
+   663 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   664 ;;      Totals:         2       0       0       0       0       0       0       0       0
+   665 ;;Total ram usage:        2 bytes
+   666 ;; Hardware stack levels used: 1
+   667 ;; Hardware stack levels required when called: 1
+   668 ;; This function calls:
+   669 ;;		_SPI_send
+   670 ;; This function is called by:
+   671 ;;		_mcp2515Start
+   672 ;; This function uses a non-reentrant model
+   673 ;;
+   674                           
+   675                           	psect	text3
+   676   005DDA                     __ptext3:
+   677                           	callstack 0
+   678   005DDA                     _mcp2515WriteRegister:
+   679                           	callstack 27
+   680                           
+   681                           ;incstack = 0
+   682                           ;mcp2515WriteRegister@address stored from wreg
+   683   005DDA  6E27               	movwf	mcp2515WriteRegister@address^0,c
+   684   005DDC                     
+   685                           ;can.c: 84: PORTAbits.RA5 = 0;
+   686   005DDC  9A80               	bcf	128,5,c	;volatile
+   687   005DDE                     
+   688                           ;can.c: 85: SPI_send(0x02);
+   689   005DDE  0E02               	movlw	2
+   690   005DE0  EC08  F02F         	call	_SPI_send
+   691   005DE4                     
+   692                           ;can.c: 86: SPI_send(address);
+   693   005DE4  5027               	movf	mcp2515WriteRegister@address^0,w,c
+   694   005DE6  EC08  F02F         	call	_SPI_send
+   695   005DEA                     
+   696                           ;can.c: 87: SPI_send(value);
+   697   005DEA  5026               	movf	mcp2515WriteRegister@value^0,w,c
+   698   005DEC  EC08  F02F         	call	_SPI_send
+   699   005DF0                     
+   700                           ;can.c: 88: PORTAbits.RA5 = 1;
+   701   005DF0  8A80               	bsf	128,5,c	;volatile
+   702   005DF2  0012               	return		;funcret
+   703   005DF4                     __end_of_mcp2515WriteRegister:
+   704                           	callstack 0
+   705                           
+   706 ;; *************** function _mcp2515Reset *****************
+   707 ;; Defined at:
+   708 ;;		line 25 in file "can.c"
+   709 ;; Parameters:    Size  Location     Type
+   710 ;;		None
+   711 ;; Auto vars:     Size  Location     Type
+   712 ;;		None
+   713 ;; Return value:  Size  Location     Type
+   714 ;;                  1    wreg      void 
+   715 ;; Registers used:
+   716 ;;		wreg, status,2, status,0, cstack
+   717 ;; Tracked objects:
+   718 ;;		On entry : 0/0
+   719 ;;		On exit  : 0/0
+   720 ;;		Unchanged: 0/0
+   721 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   722 ;;      Params:         0       0       0       0       0       0       0       0       0
+   723 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   724 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   725 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   726 ;;Total ram usage:        0 bytes
+   727 ;; Hardware stack levels used: 1
+   728 ;; Hardware stack levels required when called: 1
+   729 ;; This function calls:
+   730 ;;		_SPI_send
+   731 ;;		_delayUS
+   732 ;; This function is called by:
+   733 ;;		_mcp2515Start
+   734 ;; This function uses a non-reentrant model
+   735 ;;
+   736                           
+   737                           	psect	text4
+   738   005DC2                     __ptext4:
+   739                           	callstack 0
+   740   005DC2                     _mcp2515Reset:
+   741                           	callstack 27
+   742   005DC2                     
+   743                           ;can.c: 27: PORTAbits.RA5 = 0;
+   744   005DC2  9A80               	bcf	128,5,c	;volatile
+   745   005DC4                     
+   746                           ;can.c: 28: SPI_send(0xC0);
+   747   005DC4  0EC0               	movlw	192
+   748   005DC6  EC08  F02F         	call	_SPI_send
+   749   005DCA                     
+   750                           ;can.c: 29: delayUS(20);
+   751   005DCA  0E00               	movlw	0
+   752   005DCC  6E26               	movwf	(delayUS@time+1)^0,c
+   753   005DCE  0E14               	movlw	20
+   754   005DD0  6E25               	movwf	delayUS@time^0,c
+   755   005DD2  EC34  F02F         	call	_delayUS	;wreg free
+   756   005DD6                     
+   757                           ;can.c: 30: PORTAbits.RA5 = 1 ;
+   758   005DD6  8A80               	bsf	128,5,c	;volatile
+   759   005DD8  0012               	return		;funcret
+   760   005DDA                     __end_of_mcp2515Reset:
+   761                           	callstack 0
+   762                           
+   763 ;; *************** function _delayUS *****************
+   764 ;; Defined at:
+   765 ;;		line 29 in file "delayMy.c"
+   766 ;; Parameters:    Size  Location     Type
+   767 ;;  time            2    0[COMRAM] unsigned int 
+   768 ;; Auto vars:     Size  Location     Type
+   769 ;;  i               2    2[COMRAM] unsigned int 
+   770 ;; Return value:  Size  Location     Type
+   771 ;;                  1    wreg      void 
+   772 ;; Registers used:
+   773 ;;		wreg, status,2, status,0
+   774 ;; Tracked objects:
+   775 ;;		On entry : 0/0
+   776 ;;		On exit  : 0/0
+   777 ;;		Unchanged: 0/0
+   778 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   779 ;;      Params:         2       0       0       0       0       0       0       0       0
+   780 ;;      Locals:         2       0       0       0       0       0       0       0       0
+   781 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   782 ;;      Totals:         4       0       0       0       0       0       0       0       0
+   783 ;;Total ram usage:        4 bytes
+   784 ;; Hardware stack levels used: 1
+   785 ;; This function calls:
+   786 ;;		Nothing
+   787 ;; This function is called by:
+   788 ;;		_mcp2515Reset
+   789 ;;		_mcp2515Start
+   790 ;; This function uses a non-reentrant model
+   791 ;;
+   792                           
+   793                           	psect	text5
+   794   005E68                     __ptext5:
+   795                           	callstack 0
+   796   005E68                     _delayUS:
+   797                           	callstack 27
+   798   005E68                     
+   799                           ;delayMy.c: 31: for(uint16_t i=0; i < time; i++);
+   800   005E68  0E00               	movlw	0
+   801   005E6A  6E28               	movwf	(delayUS@i+1)^0,c
+   802   005E6C  0E00               	movlw	0
+   803   005E6E  6E27               	movwf	delayUS@i^0,c
+   804   005E70  EF3C  F02F         	goto	l1273
+   805   005E74                     l1271:
+   806   005E74  4A27               	infsnz	delayUS@i^0,f,c
+   807   005E76  2A28               	incf	(delayUS@i+1)^0,f,c
+   808   005E78                     l1273:
+   809   005E78  5025               	movf	delayUS@time^0,w,c
+   810   005E7A  5C27               	subwf	delayUS@i^0,w,c
+   811   005E7C  5026               	movf	(delayUS@time+1)^0,w,c
+   812   005E7E  5828               	subwfb	(delayUS@i+1)^0,w,c
+   813   005E80  A0D8               	btfss	status,0,c
+   814   005E82  EF45  F02F         	goto	u251
+   815   005E86  EF47  F02F         	goto	u250
+   816   005E8A                     u251:
+   817   005E8A  EF3A  F02F         	goto	l1271
+   818   005E8E                     u250:
+   819   005E8E  0012               	return		;funcret
+   820   005E90                     __end_of_delayUS:
+   821                           	callstack 0
+   822                           
+   823 ;; *************** function _delayMS *****************
+   824 ;; Defined at:
+   825 ;;		line 16 in file "delayMy.c"
+   826 ;; Parameters:    Size  Location     Type
+   827 ;;  time            2    0[COMRAM] unsigned int 
+   828 ;; Auto vars:     Size  Location     Type
+   829 ;;  ms              2    4[COMRAM] unsigned int 
+   830 ;;  i               2    2[COMRAM] unsigned int 
+   831 ;; Return value:  Size  Location     Type
+   832 ;;                  1    wreg      void 
+   833 ;; Registers used:
+   834 ;;		wreg, status,2, status,0
+   835 ;; Tracked objects:
+   836 ;;		On entry : 0/0
+   837 ;;		On exit  : 0/0
+   838 ;;		Unchanged: 0/0
+   839 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   840 ;;      Params:         2       0       0       0       0       0       0       0       0
+   841 ;;      Locals:         4       0       0       0       0       0       0       0       0
+   842 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   843 ;;      Totals:         6       0       0       0       0       0       0       0       0
+   844 ;;Total ram usage:        6 bytes
+   845 ;; Hardware stack levels used: 1
+   846 ;; This function calls:
+   847 ;;		Nothing
+   848 ;; This function is called by:
+   849 ;;		_main
+   850 ;;		_hardware_ini
+   851 ;;		_mcp2515Start
+   852 ;; This function uses a non-reentrant model
+   853 ;;
+   854                           
+   855                           	psect	text6
+   856   005EC6                     __ptext6:
+   857                           	callstack 0
+   858   005EC6                     _delayMS:
+   859                           	callstack 28
+   860   005EC6                     
+   861                           ;delayMy.c: 18: for(uint16_t i=0; i < time; i++)
+   862   005EC6  0E00               	movlw	0
+   863   005EC8  6E28               	movwf	(delayMS@i+1)^0,c
+   864   005ECA  0E00               	movlw	0
+   865   005ECC  6E27               	movwf	delayMS@i^0,c
+   866   005ECE  EF7C  F02F         	goto	l1289
+   867   005ED2                     l1277:
+   868                           
+   869                           ;delayMy.c: 19: {;delayMy.c: 20: for (uint16_t ms=0; ms < 182; ms++);
+   870   005ED2  0E00               	movlw	0
+   871   005ED4  6E2A               	movwf	(delayMS@ms+1)^0,c
+   872   005ED6  0E00               	movlw	0
+   873   005ED8  6E29               	movwf	delayMS@ms^0,c
+   874   005EDA                     l1283:
+   875   005EDA  4A29               	infsnz	delayMS@ms^0,f,c
+   876   005EDC  2A2A               	incf	(delayMS@ms+1)^0,f,c
+   877   005EDE  502A               	movf	(delayMS@ms+1)^0,w,c
+   878   005EE0  E109               	bnz	u260
+   879   005EE2  0EB6               	movlw	182
+   880   005EE4  5C29               	subwf	delayMS@ms^0,w,c
+   881   005EE6  A0D8               	btfss	status,0,c
+   882   005EE8  EF78  F02F         	goto	u261
+   883   005EEC  EF7A  F02F         	goto	u260
+   884   005EF0                     u261:
+   885   005EF0  EF6D  F02F         	goto	l1283
+   886   005EF4                     u260:
+   887   005EF4  4A27               	infsnz	delayMS@i^0,f,c
+   888   005EF6  2A28               	incf	(delayMS@i+1)^0,f,c
+   889   005EF8                     l1289:
+   890   005EF8  5025               	movf	delayMS@time^0,w,c
+   891   005EFA  5C27               	subwf	delayMS@i^0,w,c
+   892   005EFC  5026               	movf	(delayMS@time+1)^0,w,c
+   893   005EFE  5828               	subwfb	(delayMS@i+1)^0,w,c
+   894   005F00  A0D8               	btfss	status,0,c
+   895   005F02  EF85  F02F         	goto	u271
+   896   005F06  EF87  F02F         	goto	u270
+   897   005F0A                     u271:
+   898   005F0A  EF69  F02F         	goto	l1277
+   899   005F0E                     u270:
+   900   005F0E  0012               	return		;funcret
+   901   005F10                     __end_of_delayMS:
+   902                           	callstack 0
+   903                           
+   904 ;; *************** function _SPI_ini *****************
+   905 ;; Defined at:
+   906 ;;		line 20 in file "spi.c"
+   907 ;; Parameters:    Size  Location     Type
+   908 ;;		None
+   909 ;; Auto vars:     Size  Location     Type
+   910 ;;  dataFlushing    1    0        unsigned char 
+   911 ;; Return value:  Size  Location     Type
+   912 ;;                  1    wreg      void 
+   913 ;; Registers used:
+   914 ;;		wreg, status,2
+   915 ;; Tracked objects:
+   916 ;;		On entry : 0/0
+   917 ;;		On exit  : 0/0
+   918 ;;		Unchanged: 0/0
+   919 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   920 ;;      Params:         0       0       0       0       0       0       0       0       0
+   921 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   922 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   923 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   924 ;;Total ram usage:        0 bytes
+   925 ;; Hardware stack levels used: 1
+   926 ;; This function calls:
+   927 ;;		Nothing
+   928 ;; This function is called by:
+   929 ;;		_hardware_ini
+   930 ;; This function uses a non-reentrant model
+   931 ;;
+   932                           
+   933                           	psect	text7
+   934   005D98                     __ptext7:
+   935                           	callstack 0
+   936   005D98                     _SPI_ini:
+   937                           	callstack 29
+   938   005D98                     
+   939                           ;spi.c: 22: uint8_t dataFlushing;;spi.c: 26: SSPSTAT = 0x00;
+   940   005D98  0E00               	movlw	0
+   941   005D9A  6EC7               	movwf	199,c	;volatile
+   942                           
+   943                           ;spi.c: 28: SSPCON1 = 0x32;
+   944   005D9C  0E32               	movlw	50
+   945   005D9E  6EC6               	movwf	198,c	;volatile
+   946                           
+   947                           ;spi.c: 30: ADCON0 = 0x01;
+   948   005DA0  0E01               	movlw	1
+   949   005DA2  6EC2               	movwf	194,c	;volatile
+   950                           
+   951                           ;spi.c: 31: ADCON1 = 0x0B;
+   952   005DA4  0E0B               	movlw	11
+   953   005DA6  6EC1               	movwf	193,c	;volatile
+   954   005DA8                     
+   955                           ;spi.c: 33: PIR1bits.SSPIF = 0;
+   956   005DA8  969E               	bcf	158,3,c	;volatile
+   957   005DAA  0012               	return		;funcret
+   958   005DAC                     __end_of_SPI_ini:
+   959                           	callstack 0
+   960                           
+   961 ;; *************** function _canSend *****************
+   962 ;; Defined at:
+   963 ;;		line 246 in file "can.c"
+   964 ;; Parameters:    Size  Location     Type
+   965 ;;  txb             1    wreg     unsigned char 
+   966 ;;  id              1    4[COMRAM] unsigned char 
+   967 ;;  lenght          1    5[COMRAM] unsigned char 
+   968 ;;  data            2    6[COMRAM] PTR unsigned char 
+   969 ;;		 -> dataSend(8), 
+   970 ;; Auto vars:     Size  Location     Type
+   971 ;;  txb             1    8[COMRAM] unsigned char 
+   972 ;;  i               1   11[COMRAM] unsigned char 
+   973 ;;  i               1   10[COMRAM] unsigned char 
+   974 ;;  i               1    9[COMRAM] unsigned char 
+   975 ;; Return value:  Size  Location     Type
+   976 ;;                  1    wreg      void 
+   977 ;; Registers used:
+   978 ;;		wreg, fsr2l, fsr2h, status,2, status,0, cstack
+   979 ;; Tracked objects:
+   980 ;;		On entry : 0/0
+   981 ;;		On exit  : 0/0
+   982 ;;		Unchanged: 0/0
+   983 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   984 ;;      Params:         4       0       0       0       0       0       0       0       0
+   985 ;;      Locals:         4       0       0       0       0       0       0       0       0
+   986 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   987 ;;      Totals:         8       0       0       0       0       0       0       0       0
+   988 ;;Total ram usage:        8 bytes
+   989 ;; Hardware stack levels used: 1
+   990 ;; Hardware stack levels required when called: 2
+   991 ;; This function calls:
+   992 ;;		_SPI_send
+   993 ;;		_mcp2515BitChange
+   994 ;; This function is called by:
+   995 ;;		_main
+   996 ;; This function uses a non-reentrant model
+   997 ;;
+   998                           
+   999                           	psect	text8
+  1000   00601A                     __ptext8:
+  1001                           	callstack 0
+  1002   00601A                     _canSend:
+  1003                           	callstack 28
+  1004                           
+  1005                           ;incstack = 0
+  1006                           ;canSend@txb stored from wreg
+  1007   00601A  6E2D               	movwf	canSend@txb^0,c
+  1008   00601C                     
+  1009                           ;can.c: 248: PORTAbits.RA5 = 0;
+  1010   00601C  9A80               	bcf	128,5,c	;volatile
+  1011   00601E                     
+  1012                           ;can.c: 249: SPI_send(0x02);
+  1013   00601E  0E02               	movlw	2
+  1014   006020  EC08  F02F         	call	_SPI_send
+  1015                           
+  1016                           ;can.c: 251: switch (txb)
+  1017   006024  EFA1  F030         	goto	l1453
+  1018   006028                     l1397:
+  1019                           
+  1020                           ;can.c: 254: SPI_send(0x41);
+  1021   006028  0E41               	movlw	65
+  1022   00602A  EC08  F02F         	call	_SPI_send
+  1023   00602E                     
+  1024                           ;can.c: 255: SPI_send(id);
+  1025   00602E  5029               	movf	canSend@id^0,w,c
+  1026   006030  EC08  F02F         	call	_SPI_send
+  1027   006034                     
+  1028                           ;can.c: 256: SPI_send(0x45);
+  1029   006034  0E45               	movlw	69
+  1030   006036  EC08  F02F         	call	_SPI_send
+  1031                           
+  1032                           ;can.c: 257: SPI_send(lenght);
+  1033   00603A  502A               	movf	canSend@lenght^0,w,c
+  1034   00603C  EC08  F02F         	call	_SPI_send
+  1035   006040                     
+  1036                           ;can.c: 258: for (uint8_t i = 0; i < (lenght); i++)
+  1037   006040  0E00               	movlw	0
+  1038   006042  6E2E               	movwf	canSend@i^0,c
+  1039   006044  EF2E  F030         	goto	l1409
+  1040   006048                     l1405:
+  1041                           
+  1042                           ;can.c: 259: {;can.c: 260: SPI_send(data[i]);
+  1043   006048  502E               	movf	canSend@i^0,w,c
+  1044   00604A  242B               	addwf	canSend@data^0,w,c
+  1045   00604C  6ED9               	movwf	fsr2l,c
+  1046   00604E  0E00               	movlw	0
+  1047   006050  202C               	addwfc	(canSend@data+1)^0,w,c
+  1048   006052  6EDA               	movwf	fsr2h,c
+  1049   006054  50DF               	movf	indf2,w,c
+  1050   006056  EC08  F02F         	call	_SPI_send
+  1051   00605A  2A2E               	incf	canSend@i^0,f,c
+  1052   00605C                     l1409:
+  1053   00605C  502A               	movf	canSend@lenght^0,w,c
+  1054   00605E  5C2E               	subwf	canSend@i^0,w,c
+  1055   006060  A0D8               	btfss	status,0,c
+  1056   006062  EF35  F030         	goto	u351
+  1057   006066  EF37  F030         	goto	u350
+  1058   00606A                     u351:
+  1059   00606A  EF24  F030         	goto	l1405
+  1060   00606E                     u350:
+  1061   00606E                     
+  1062                           ;can.c: 261: };can.c: 262: SPI_send(0x80);
+  1063   00606E  0E80               	movlw	128
+  1064   006070  EC08  F02F         	call	_SPI_send
+  1065   006074                     
+  1066                           ;can.c: 263: mcp2515BitChange(0x40, 0b00001000, 0b00001000);
+  1067   006074  0E08               	movlw	8
+  1068   006076  6E26               	movwf	mcp2515BitChange@maskBit^0,c
+  1069   006078  0E08               	movlw	8
+  1070   00607A  6E27               	movwf	mcp2515BitChange@valueNew^0,c
+  1071   00607C  0E40               	movlw	64
+  1072   00607E  EC24  F02F         	call	_mcp2515BitChange
+  1073                           
+  1074                           ;can.c: 264: break;
+  1075   006082  EFAC  F030         	goto	l123
+  1076   006086                     l1415:
+  1077                           
+  1078                           ;can.c: 266: SPI_send(0x51);
+  1079   006086  0E51               	movlw	81
+  1080   006088  EC08  F02F         	call	_SPI_send
+  1081   00608C                     
+  1082                           ;can.c: 267: SPI_send(id);
+  1083   00608C  5029               	movf	canSend@id^0,w,c
+  1084   00608E  EC08  F02F         	call	_SPI_send
+  1085   006092                     
+  1086                           ;can.c: 268: SPI_send(0x55);
+  1087   006092  0E55               	movlw	85
+  1088   006094  EC08  F02F         	call	_SPI_send
+  1089                           
+  1090                           ;can.c: 269: SPI_send(lenght);
+  1091   006098  502A               	movf	canSend@lenght^0,w,c
+  1092   00609A  EC08  F02F         	call	_SPI_send
+  1093   00609E                     
+  1094                           ;can.c: 270: for (uint8_t i = 0; i < (lenght); i++)
+  1095   00609E  0E00               	movlw	0
+  1096   0060A0  6E2F               	movwf	canSend@i_418^0,c
+  1097   0060A2  EF5D  F030         	goto	l1427
+  1098   0060A6                     l1423:
+  1099                           
+  1100                           ;can.c: 271: {;can.c: 272: SPI_send(data[i]);
+  1101   0060A6  502F               	movf	canSend@i_418^0,w,c
+  1102   0060A8  242B               	addwf	canSend@data^0,w,c
+  1103   0060AA  6ED9               	movwf	fsr2l,c
+  1104   0060AC  0E00               	movlw	0
+  1105   0060AE  202C               	addwfc	(canSend@data+1)^0,w,c
+  1106   0060B0  6EDA               	movwf	fsr2h,c
+  1107   0060B2  50DF               	movf	indf2,w,c
+  1108   0060B4  EC08  F02F         	call	_SPI_send
+  1109   0060B8  2A2F               	incf	canSend@i_418^0,f,c
+  1110   0060BA                     l1427:
+  1111   0060BA  502A               	movf	canSend@lenght^0,w,c
+  1112   0060BC  5C2F               	subwf	canSend@i_418^0,w,c
+  1113   0060BE  A0D8               	btfss	status,0,c
+  1114   0060C0  EF64  F030         	goto	u361
+  1115   0060C4  EF66  F030         	goto	u360
+  1116   0060C8                     u361:
+  1117   0060C8  EF53  F030         	goto	l1423
+  1118   0060CC                     u360:
+  1119   0060CC                     
+  1120                           ;can.c: 273: };can.c: 274: SPI_send(0x80);
+  1121   0060CC  0E80               	movlw	128
+  1122   0060CE  EC08  F02F         	call	_SPI_send
+  1123   0060D2                     
+  1124                           ;can.c: 275: mcp2515BitChange(0x50, 0b00001000, 0b00001000);
+  1125   0060D2  0E08               	movlw	8
+  1126   0060D4  6E26               	movwf	mcp2515BitChange@maskBit^0,c
+  1127   0060D6  0E08               	movlw	8
+  1128   0060D8  6E27               	movwf	mcp2515BitChange@valueNew^0,c
+  1129   0060DA  0E50               	movlw	80
+  1130   0060DC  EC24  F02F         	call	_mcp2515BitChange
+  1131                           
+  1132                           ;can.c: 276: break;
+  1133   0060E0  EFAC  F030         	goto	l123
+  1134   0060E4                     l1433:
+  1135                           
+  1136                           ;can.c: 278: SPI_send(0x31);
+  1137   0060E4  0E31               	movlw	49
+  1138   0060E6  EC08  F02F         	call	_SPI_send
+  1139   0060EA                     
+  1140                           ;can.c: 279: SPI_send(id);
+  1141   0060EA  5029               	movf	canSend@id^0,w,c
+  1142   0060EC  EC08  F02F         	call	_SPI_send
+  1143   0060F0                     
+  1144                           ;can.c: 280: SPI_send(0x35);
+  1145   0060F0  0E35               	movlw	53
+  1146   0060F2  EC08  F02F         	call	_SPI_send
+  1147                           
+  1148                           ;can.c: 281: SPI_send(lenght);
+  1149   0060F6  502A               	movf	canSend@lenght^0,w,c
+  1150   0060F8  EC08  F02F         	call	_SPI_send
+  1151   0060FC                     
+  1152                           ;can.c: 282: for (uint8_t i = 0; i < (lenght); i++)
+  1153   0060FC  0E00               	movlw	0
+  1154   0060FE  6E30               	movwf	canSend@i_419^0,c
+  1155   006100  EF8C  F030         	goto	l1445
+  1156   006104                     l1441:
+  1157                           
+  1158                           ;can.c: 283: {;can.c: 284: SPI_send(data[i]);
+  1159   006104  5030               	movf	canSend@i_419^0,w,c
+  1160   006106  242B               	addwf	canSend@data^0,w,c
+  1161   006108  6ED9               	movwf	fsr2l,c
+  1162   00610A  0E00               	movlw	0
+  1163   00610C  202C               	addwfc	(canSend@data+1)^0,w,c
+  1164   00610E  6EDA               	movwf	fsr2h,c
+  1165   006110  50DF               	movf	indf2,w,c
+  1166   006112  EC08  F02F         	call	_SPI_send
+  1167   006116  2A30               	incf	canSend@i_419^0,f,c
+  1168   006118                     l1445:
+  1169   006118  502A               	movf	canSend@lenght^0,w,c
+  1170   00611A  5C30               	subwf	canSend@i_419^0,w,c
+  1171   00611C  A0D8               	btfss	status,0,c
+  1172   00611E  EF93  F030         	goto	u371
+  1173   006122  EF95  F030         	goto	u370
+  1174   006126                     u371:
+  1175   006126  EF82  F030         	goto	l1441
+  1176   00612A                     u370:
+  1177   00612A                     
+  1178                           ;can.c: 285: };can.c: 286: SPI_send(0x80);
+  1179   00612A  0E80               	movlw	128
+  1180   00612C  EC08  F02F         	call	_SPI_send
+  1181   006130                     
+  1182                           ;can.c: 287: mcp2515BitChange(0x30, 0b00001000, 0b00001000);
+  1183   006130  0E08               	movlw	8
+  1184   006132  6E26               	movwf	mcp2515BitChange@maskBit^0,c
+  1185   006134  0E08               	movlw	8
+  1186   006136  6E27               	movwf	mcp2515BitChange@valueNew^0,c
+  1187   006138  0E30               	movlw	48
+  1188   00613A  EC24  F02F         	call	_mcp2515BitChange
+  1189                           
+  1190                           ;can.c: 288: break;
+  1191   00613E  EFAC  F030         	goto	l123
+  1192   006142                     l1453:
+  1193   006142  502D               	movf	canSend@txb^0,w,c
+  1194                           
+  1195                           ; Switch size 1, requested type "simple"
+  1196                           ; Number of cases is 2, Range of values is 1 to 2
+  1197                           ; switch strategies available:
+  1198                           ; Name         Instructions Cycles
+  1199                           ; simple_byte            7     4 (average)
+  1200                           ;	Chosen strategy is simple_byte
+  1201   006144  0A01               	xorlw	1	; case 1
+  1202   006146  B4D8               	btfsc	status,2,c
+  1203   006148  EF14  F030         	goto	l1397
+  1204   00614C  0A03               	xorlw	3	; case 2
+  1205   00614E  B4D8               	btfsc	status,2,c
+  1206   006150  EF43  F030         	goto	l1415
+  1207   006154  EF72  F030         	goto	l1433
+  1208   006158                     l123:
+  1209                           
+  1210                           ;can.c: 290: PORTAbits.RA5 = 1;
+  1211   006158  8A80               	bsf	128,5,c	;volatile
+  1212   00615A  0012               	return		;funcret
+  1213   00615C                     __end_of_canSend:
+  1214                           	callstack 0
+  1215                           
+  1216 ;; *************** function _mcp2515BitChange *****************
+  1217 ;; Defined at:
+  1218 ;;		line 228 in file "can.c"
+  1219 ;; Parameters:    Size  Location     Type
+  1220 ;;  addressReg      1    wreg     unsigned char 
+  1221 ;;  maskBit         1    1[COMRAM] unsigned char 
+  1222 ;;  valueNew        1    2[COMRAM] unsigned char 
+  1223 ;; Auto vars:     Size  Location     Type
+  1224 ;;  addressReg      1    3[COMRAM] unsigned char 
+  1225 ;; Return value:  Size  Location     Type
+  1226 ;;                  1    wreg      void 
+  1227 ;; Registers used:
+  1228 ;;		wreg, status,2, cstack
+  1229 ;; Tracked objects:
+  1230 ;;		On entry : 0/0
+  1231 ;;		On exit  : 0/0
+  1232 ;;		Unchanged: 0/0
+  1233 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+  1234 ;;      Params:         2       0       0       0       0       0       0       0       0
+  1235 ;;      Locals:         1       0       0       0       0       0       0       0       0
+  1236 ;;      Temps:          0       0       0       0       0       0       0       0       0
+  1237 ;;      Totals:         3       0       0       0       0       0       0       0       0
+  1238 ;;Total ram usage:        3 bytes
+  1239 ;; Hardware stack levels used: 1
+  1240 ;; Hardware stack levels required when called: 1
+  1241 ;; This function calls:
+  1242 ;;		_SPI_send
+  1243 ;; This function is called by:
+  1244 ;;		_mcp2515Start
+  1245 ;;		_canSend
+  1246 ;;		_mcp2515MessageSend
+  1247 ;; This function uses a non-reentrant model
+  1248 ;;
+  1249                           
+  1250                           	psect	text9
+  1251   005E48                     __ptext9:
+  1252                           	callstack 0
+  1253   005E48                     _mcp2515BitChange:
+  1254                           	callstack 27
+  1255                           
+  1256                           ;incstack = 0
+  1257                           ;mcp2515BitChange@addressReg stored from wreg
+  1258   005E48  6E28               	movwf	mcp2515BitChange@addressReg^0,c
+  1259   005E4A                     
+  1260                           ;can.c: 230: PORTAbits.RA5 = 0;
+  1261   005E4A  9A80               	bcf	128,5,c	;volatile
+  1262   005E4C                     
+  1263                           ;can.c: 232: SPI_send(0x05);
+  1264   005E4C  0E05               	movlw	5
+  1265   005E4E  EC08  F02F         	call	_SPI_send
+  1266   005E52                     
+  1267                           ;can.c: 233: SPI_send(addressReg);
+  1268   005E52  5028               	movf	mcp2515BitChange@addressReg^0,w,c
+  1269   005E54  EC08  F02F         	call	_SPI_send
+  1270   005E58                     
+  1271                           ;can.c: 234: SPI_send(maskBit);
+  1272   005E58  5026               	movf	mcp2515BitChange@maskBit^0,w,c
+  1273   005E5A  EC08  F02F         	call	_SPI_send
+  1274   005E5E                     
+  1275                           ;can.c: 235: SPI_send(valueNew);
+  1276   005E5E  5027               	movf	mcp2515BitChange@valueNew^0,w,c
+  1277   005E60  EC08  F02F         	call	_SPI_send
+  1278   005E64                     
+  1279                           ;can.c: 237: PORTAbits.RA5 = 1;
+  1280   005E64  8A80               	bsf	128,5,c	;volatile
+  1281   005E66  0012               	return		;funcret
+  1282   005E68                     __end_of_mcp2515BitChange:
+  1283                           	callstack 0
+  1284                           
+  1285 ;; *************** function _canRead *****************
+  1286 ;; Defined at:
+  1287 ;;		line 300 in file "can.c"
+  1288 ;; Parameters:    Size  Location     Type
+  1289 ;;  id              1    wreg     unsigned char 
+  1290 ;;  data            2    3[COMRAM] PTR unsigned char 
+  1291 ;;		 -> RAM(2047), dataRead(8), 
+  1292 ;; Auto vars:     Size  Location     Type
+  1293 ;;  id              1   10[COMRAM] unsigned char 
+  1294 ;;  i               1    8[COMRAM] unsigned char 
+  1295 ;;  i               1    7[COMRAM] unsigned char 
+  1296 ;;  lenght          1    9[COMRAM] unsigned char 
+  1297 ;; Return value:  Size  Location     Type
+  1298 ;;                  1    wreg      void 
+  1299 ;; Registers used:
+  1300 ;;		wreg, fsr2l, fsr2h, status,2, status,0, cstack
+  1301 ;; Tracked objects:
+  1302 ;;		On entry : 0/0
+  1303 ;;		On exit  : 0/0
+  1304 ;;		Unchanged: 0/0
+  1305 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+  1306 ;;      Params:         2       0       0       0       0       0       0       0       0
+  1307 ;;      Locals:         4       0       0       0       0       0       0       0       0
+  1308 ;;      Temps:          2       0       0       0       0       0       0       0       0
+  1309 ;;      Totals:         8       0       0       0       0       0       0       0       0
+  1310 ;;Total ram usage:        8 bytes
+  1311 ;; Hardware stack levels used: 1
+  1312 ;; Hardware stack levels required when called: 2
+  1313 ;; This function calls:
+  1314 ;;		_mcp2515ReadRegister
+  1315 ;; This function is called by:
+  1316 ;;		_main
+  1317 ;; This function uses a non-reentrant model
+  1318 ;;
+  1319                           
+  1320                           	psect	text10
+  1321   005F64                     __ptext10:
+  1322                           	callstack 0
+  1323   005F64                     _canRead:
+  1324                           	callstack 28
+  1325                           
+  1326                           ;incstack = 0
+  1327                           ;canRead@id stored from wreg
+  1328   005F64  6E2F               	movwf	canRead@id^0,c
+  1329   005F66                     
+  1330                           ;can.c: 303: if ((mcp2515ReadRegister(0x61)) == id)
+  1331   005F66  0E61               	movlw	97
+  1332   005F68  EC16  F02F         	call	_mcp2515ReadRegister
+  1333   005F6C  182F               	xorwf	canRead@id^0,w,c
+  1334   005F6E  A4D8               	btfss	status,2,c
+  1335   005F70  EFBC  F02F         	goto	u381
+  1336   005F74  EFBE  F02F         	goto	u380
+  1337   005F78                     u381:
+  1338   005F78  EFDC  F02F         	goto	l1469
+  1339   005F7C                     u380:
+  1340   005F7C                     
+  1341                           ;can.c: 304: {;can.c: 305: lenght = mcp2515ReadRegister(0x65);
+  1342   005F7C  0E65               	movlw	101
+  1343   005F7E  EC16  F02F         	call	_mcp2515ReadRegister
+  1344   005F82  6E2E               	movwf	canRead@lenght^0,c
+  1345   005F84                     
+  1346                           ;can.c: 307: for (uint8_t i = 0; i < (lenght); i++)
+  1347   005F84  0E00               	movlw	0
+  1348   005F86  6E2C               	movwf	canRead@i^0,c
+  1349   005F88  EFD1  F02F         	goto	l1467
+  1350   005F8C                     l1463:
+  1351                           
+  1352                           ;can.c: 308: {;can.c: 309: data[i] = mcp2515ReadRegister(0x66);
+  1353   005F8C  502C               	movf	canRead@i^0,w,c
+  1354   005F8E  2428               	addwf	canRead@data^0,w,c
+  1355   005F90  6ED9               	movwf	fsr2l,c
+  1356   005F92  0E00               	movlw	0
+  1357   005F94  2029               	addwfc	(canRead@data+1)^0,w,c
+  1358   005F96  6EDA               	movwf	fsr2h,c
+  1359   005F98  0E66               	movlw	102
+  1360   005F9A  EC16  F02F         	call	_mcp2515ReadRegister
+  1361   005F9E  6EDF               	movwf	indf2,c
+  1362   005FA0  2A2C               	incf	canRead@i^0,f,c
+  1363   005FA2                     l1467:
+  1364   005FA2  502E               	movf	canRead@lenght^0,w,c
+  1365   005FA4  5C2C               	subwf	canRead@i^0,w,c
+  1366   005FA6  A0D8               	btfss	status,0,c
+  1367   005FA8  EFD8  F02F         	goto	u391
+  1368   005FAC  EFDA  F02F         	goto	u390
+  1369   005FB0                     u391:
+  1370   005FB0  EFC6  F02F         	goto	l1463
+  1371   005FB4                     u390:
+  1372   005FB4  EF0C  F030         	goto	l145
+  1373   005FB8                     l1469:
+  1374                           
+  1375                           ;can.c: 312: else if ((mcp2515ReadRegister(0x71)) == id )
+  1376   005FB8  0E71               	movlw	113
+  1377   005FBA  EC16  F02F         	call	_mcp2515ReadRegister
+  1378   005FBE  182F               	xorwf	canRead@id^0,w,c
+  1379   005FC0  A4D8               	btfss	status,2,c
+  1380   005FC2  EFE5  F02F         	goto	u401
+  1381   005FC6  EFE7  F02F         	goto	u400
+  1382   005FCA                     u401:
+  1383   005FCA  EF0C  F030         	goto	l1483
+  1384   005FCE                     u400:
+  1385   005FCE                     
+  1386                           ;can.c: 313: {;can.c: 314: data = id;
+  1387   005FCE  502F               	movf	canRead@id^0,w,c
+  1388   005FD0  6E2A               	movwf	??_canRead^0,c
+  1389   005FD2  6A2B               	clrf	(??_canRead+1)^0,c
+  1390   005FD4  C02A  F028         	movff	??_canRead,canRead@data
+  1391   005FD8  C02B  F029         	movff	??_canRead+1,canRead@data+1
+  1392   005FDC                     
+  1393                           ;can.c: 315: lenght = mcp2515ReadRegister(0x75);
+  1394   005FDC  0E75               	movlw	117
+  1395   005FDE  EC16  F02F         	call	_mcp2515ReadRegister
+  1396   005FE2  6E2E               	movwf	canRead@lenght^0,c
+  1397   005FE4                     
+  1398                           ;can.c: 317: for (uint8_t i = 0; i < (lenght); i++)
+  1399   005FE4  0E00               	movlw	0
+  1400   005FE6  6E2D               	movwf	canRead@i_426^0,c
+  1401   005FE8  EF01  F030         	goto	l1481
+  1402   005FEC                     l1477:
+  1403                           
+  1404                           ;can.c: 318: {;can.c: 319: data[i] = mcp2515ReadRegister(0x76);
+  1405   005FEC  502D               	movf	canRead@i_426^0,w,c
+  1406   005FEE  2428               	addwf	canRead@data^0,w,c
+  1407   005FF0  6ED9               	movwf	fsr2l,c
+  1408   005FF2  0E00               	movlw	0
+  1409   005FF4  2029               	addwfc	(canRead@data+1)^0,w,c
+  1410   005FF6  6EDA               	movwf	fsr2h,c
+  1411   005FF8  0E76               	movlw	118
+  1412   005FFA  EC16  F02F         	call	_mcp2515ReadRegister
+  1413   005FFE  6EDF               	movwf	indf2,c
+  1414   006000  2A2D               	incf	canRead@i_426^0,f,c
+  1415   006002                     l1481:
+  1416   006002  502E               	movf	canRead@lenght^0,w,c
+  1417   006004  5C2D               	subwf	canRead@i_426^0,w,c
+  1418   006006  A0D8               	btfss	status,0,c
+  1419   006008  EF08  F030         	goto	u411
+  1420   00600C  EF0A  F030         	goto	u410
+  1421   006010                     u411:
+  1422   006010  EFF6  F02F         	goto	l1477
+  1423   006014                     u410:
+  1424   006014  EF0C  F030         	goto	l145
+  1425   006018                     l1483:
+  1426   006018                     l145:
+  1427   006018  0012               	return		;funcret
+  1428   00601A                     __end_of_canRead:
+  1429                           	callstack 0
+  1430                           
+  1431 ;; *************** function _mcp2515ReadRegister *****************
+  1432 ;; Defined at:
+  1433 ;;		line 98 in file "can.c"
+  1434 ;; Parameters:    Size  Location     Type
+  1435 ;;  address         1    wreg     unsigned char 
+  1436 ;; Auto vars:     Size  Location     Type
+  1437 ;;  address         1    1[COMRAM] unsigned char 
+  1438 ;;  buffer          1    2[COMRAM] unsigned char 
+  1439 ;; Return value:  Size  Location     Type
+  1440 ;;                  1    wreg      unsigned char 
+  1441 ;; Registers used:
+  1442 ;;		wreg, status,2, cstack
+  1443 ;; Tracked objects:
+  1444 ;;		On entry : 0/0
+  1445 ;;		On exit  : 0/0
+  1446 ;;		Unchanged: 0/0
+  1447 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+  1448 ;;      Params:         0       0       0       0       0       0       0       0       0
+  1449 ;;      Locals:         2       0       0       0       0       0       0       0       0
+  1450 ;;      Temps:          0       0       0       0       0       0       0       0       0
+  1451 ;;      Totals:         2       0       0       0       0       0       0       0       0
+  1452 ;;Total ram usage:        2 bytes
+  1453 ;; Hardware stack levels used: 1
+  1454 ;; Hardware stack levels required when called: 1
+  1455 ;; This function calls:
+  1456 ;;		_SPI_receive
+  1457 ;;		_SPI_send
+  1458 ;; This function is called by:
+  1459 ;;		_mcp2515Start
+  1460 ;;		_canRead
+  1461 ;;		_mcp2515MessageRead
+  1462 ;; This function uses a non-reentrant model
+  1463 ;;
+  1464                           
+  1465                           	psect	text11
+  1466   005E2C                     __ptext11:
+  1467                           	callstack 0
+  1468   005E2C                     _mcp2515ReadRegister:
+  1469                           	callstack 27
+  1470                           
+  1471                           ;incstack = 0
+  1472                           ;mcp2515ReadRegister@address stored from wreg
+  1473   005E2C  6E26               	movwf	mcp2515ReadRegister@address^0,c
+  1474   005E2E                     
+  1475                           ;can.c: 100: uint8_t buffer;;can.c: 101: PORTAbits.RA5 = 0;
+  1476   005E2E  9A80               	bcf	128,5,c	;volatile
+  1477   005E30                     
+  1478                           ;can.c: 102: SPI_send(0x03);
+  1479   005E30  0E03               	movlw	3
+  1480   005E32  EC08  F02F         	call	_SPI_send
+  1481   005E36                     
+  1482                           ;can.c: 104: SPI_send(address);
+  1483   005E36  5026               	movf	mcp2515ReadRegister@address^0,w,c
+  1484   005E38  EC08  F02F         	call	_SPI_send
+  1485   005E3C                     
+  1486                           ;can.c: 105: buffer = SPI_receive();
+  1487   005E3C  ECFA  F02E         	call	_SPI_receive	;wreg free
+  1488   005E40  6E27               	movwf	mcp2515ReadRegister@buffer^0,c
+  1489   005E42                     
+  1490                           ;can.c: 106: PORTAbits.RA5 = 1;
+  1491   005E42  8A80               	bsf	128,5,c	;volatile
+  1492   005E44                     
+  1493                           ;can.c: 108: return buffer;
+  1494   005E44  5027               	movf	mcp2515ReadRegister@buffer^0,w,c
+  1495   005E46  0012               	return		;funcret
+  1496   005E48                     __end_of_mcp2515ReadRegister:
+  1497                           	callstack 0
+  1498                           
+  1499 ;; *************** function _SPI_send *****************
+  1500 ;; Defined at:
+  1501 ;;		line 42 in file "spi.c"
+  1502 ;; Parameters:    Size  Location     Type
+  1503 ;;  data            1    wreg     unsigned char 
+  1504 ;; Auto vars:     Size  Location     Type
+  1505 ;;  data            1    0[COMRAM] unsigned char 
+  1506 ;;  dataFlushing    1    0        unsigned char 
+  1507 ;; Return value:  Size  Location     Type
+  1508 ;;                  1    wreg      void 
+  1509 ;; Registers used:
+  1510 ;;		wreg
+  1511 ;; Tracked objects:
+  1512 ;;		On entry : 0/0
+  1513 ;;		On exit  : 0/0
+  1514 ;;		Unchanged: 0/0
+  1515 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+  1516 ;;      Params:         0       0       0       0       0       0       0       0       0
+  1517 ;;      Locals:         1       0       0       0       0       0       0       0       0
+  1518 ;;      Temps:          0       0       0       0       0       0       0       0       0
+  1519 ;;      Totals:         1       0       0       0       0       0       0       0       0
+  1520 ;;Total ram usage:        1 bytes
+  1521 ;; Hardware stack levels used: 1
+  1522 ;; This function calls:
+  1523 ;;		Nothing
+  1524 ;; This function is called by:
+  1525 ;;		_mcp2515Reset
+  1526 ;;		_mcp2515WriteRegister
+  1527 ;;		_mcp2515ReadRegister
+  1528 ;;		_mcp2515BitChange
+  1529 ;;		_canSend
+  1530 ;;		_mcp2515MessageSend
+  1531 ;; This function uses a non-reentrant model
+  1532 ;;
+  1533                           
+  1534                           	psect	text12
+  1535   005E10                     __ptext12:
+  1536                           	callstack 0
+  1537   005E10                     _SPI_send:
+  1538                           	callstack 27
+  1539                           
+  1540                           ;incstack = 0
+  1541                           ;SPI_send@data stored from wreg
+  1542   005E10  6E25               	movwf	SPI_send@data^0,c
+  1543   005E12                     
+  1544                           ;spi.c: 44: uint8_t dataFlushing;;spi.c: 45: PIR1bits.SSPIF = 0;
+  1545   005E12  969E               	bcf	158,3,c	;volatile
+  1546   005E14                     
+  1547                           ;spi.c: 47: SSPBUF = data;
+  1548   005E14  C025  FFC9         	movff	SPI_send@data,4041	;volatile
+  1549   005E18                     l187:
+  1550   005E18  A69E               	btfss	158,3,c	;volatile
+  1551   005E1A  EF11  F02F         	goto	u11
+  1552   005E1E  EF13  F02F         	goto	u10
+  1553   005E22                     u11:
+  1554   005E22  EF0C  F02F         	goto	l187
+  1555   005E26                     u10:
+  1556   005E26                     
+  1557                           ;spi.c: 51: PIR1bits.SSPIF = 0;
+  1558   005E26  969E               	bcf	158,3,c	;volatile
+  1559   005E28  50C9               	movf	201,w,c	;volatile
+  1560   005E2A  0012               	return		;funcret
+  1561   005E2C                     __end_of_SPI_send:
+  1562                           	callstack 0
+  1563                           
+  1564 ;; *************** function _SPI_receive *****************
+  1565 ;; Defined at:
+  1566 ;;		line 62 in file "spi.c"
+  1567 ;; Parameters:    Size  Location     Type
+  1568 ;;		None
+  1569 ;; Auto vars:     Size  Location     Type
+  1570 ;;  data            1    0[COMRAM] unsigned char 
+  1571 ;; Return value:  Size  Location     Type
+  1572 ;;                  1    wreg      unsigned char 
+  1573 ;; Registers used:
+  1574 ;;		wreg, status,2
+  1575 ;; Tracked objects:
+  1576 ;;		On entry : 0/0
+  1577 ;;		On exit  : 0/0
+  1578 ;;		Unchanged: 0/0
+  1579 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+  1580 ;;      Params:         0       0       0       0       0       0       0       0       0
+  1581 ;;      Locals:         1       0       0       0       0       0       0       0       0
+  1582 ;;      Temps:          0       0       0       0       0       0       0       0       0
+  1583 ;;      Totals:         1       0       0       0       0       0       0       0       0
+  1584 ;;Total ram usage:        1 bytes
+  1585 ;; Hardware stack levels used: 1
+  1586 ;; This function calls:
+  1587 ;;		Nothing
+  1588 ;; This function is called by:
+  1589 ;;		_mcp2515ReadRegister
+  1590 ;; This function uses a non-reentrant model
+  1591 ;;
+  1592                           
+  1593                           	psect	text13
+  1594   005DF4                     __ptext13:
+  1595                           	callstack 0
+  1596   005DF4                     _SPI_receive:
+  1597                           	callstack 27
+  1598   005DF4                     
+  1599                           ;spi.c: 64: PIR1bits.SSPIF = 0;
+  1600   005DF4  969E               	bcf	158,3,c	;volatile
+  1601                           
+  1602                           ;spi.c: 65: uint8_t data;;spi.c: 67: SSPBUF = 0xFF;
+  1603   005DF6  68C9               	setf	201,c	;volatile
+  1604   005DF8                     l193:
+  1605   005DF8  A69E               	btfss	158,3,c	;volatile
+  1606   005DFA  EF01  F02F         	goto	u31
+  1607   005DFE  EF03  F02F         	goto	u30
+  1608   005E02                     u31:
+  1609   005E02  EFFC  F02E         	goto	l193
+  1610   005E06                     u30:
+  1611   005E06                     
+  1612                           ;spi.c: 69: PIR1bits.SSPIF = 0;
+  1613   005E06  969E               	bcf	158,3,c	;volatile
+  1614                           
+  1615                           ;spi.c: 70: data = SSPBUF;
+  1616   005E08  CFC9 F025          	movff	4041,SPI_receive@data	;volatile
+  1617   005E0C                     
+  1618                           ;spi.c: 72: return (data);
+  1619   005E0C  5025               	movf	SPI_receive@data^0,w,c
+  1620   005E0E  0012               	return		;funcret
+  1621   005E10                     __end_of_SPI_receive:
+  1622                           	callstack 0
+  1623   000000                     
+  1624                           	psect	rparam
+  1625   000000                     
+  1626                           	psect	idloc
+  1627                           
+  1628                           ;Config register IDLOC0 @ 0x200000
+  1629                           ;	unspecified, using default values
+  1630   200000                     	org	2097152
+  1631   200000  FF                 	db	255
+  1632                           
+  1633                           ;Config register IDLOC1 @ 0x200001
+  1634                           ;	unspecified, using default values
+  1635   200001                     	org	2097153
+  1636   200001  FF                 	db	255
+  1637                           
+  1638                           ;Config register IDLOC2 @ 0x200002
+  1639                           ;	unspecified, using default values
+  1640   200002                     	org	2097154
+  1641   200002  FF                 	db	255
+  1642                           
+  1643                           ;Config register IDLOC3 @ 0x200003
+  1644                           ;	unspecified, using default values
+  1645   200003                     	org	2097155
+  1646   200003  FF                 	db	255
+  1647                           
+  1648                           ;Config register IDLOC4 @ 0x200004
+  1649                           ;	unspecified, using default values
+  1650   200004                     	org	2097156
+  1651   200004  FF                 	db	255
+  1652                           
+  1653                           ;Config register IDLOC5 @ 0x200005
+  1654                           ;	unspecified, using default values
+  1655   200005                     	org	2097157
+  1656   200005  FF                 	db	255
+  1657                           
+  1658                           ;Config register IDLOC6 @ 0x200006
+  1659                           ;	unspecified, using default values
+  1660   200006                     	org	2097158
+  1661   200006  FF                 	db	255
+  1662                           
+  1663                           ;Config register IDLOC7 @ 0x200007
+  1664                           ;	unspecified, using default values
+  1665   200007                     	org	2097159
+  1666   200007  FF                 	db	255
+  1667                           
+  1668                           	psect	config
+  1669                           
+  1670                           ;Config register CONFIG1L @ 0x300000
+  1671                           ;	PLL Prescaler Selection bits
+  1672                           ;	PLLDIV = 5, Divide by 5 (20 MHz oscillator input)
+  1673                           ;	System Clock Postscaler Selection bits
+  1674                           ;	CPUDIV = OSC1_PLL2, [Primary Oscillator Src: /1][96 MHz PLL Src: /2]
+  1675                           ;	USB Clock Selection bit (used in Full-Speed USB mode only; UCFG:FSEN = 1)
+  1676                           ;	USBDIV = 2, USB clock source comes from the 96 MHz PLL divided by 2
+  1677   300000                     	org	3145728
+  1678   300000  24                 	db	36
+  1679                           
+  1680                           ;Config register CONFIG1H @ 0x300001
+  1681                           ;	Oscillator Selection bits
+  1682                           ;	FOSC = HS, HS oscillator (HS)
+  1683                           ;	Fail-Safe Clock Monitor Enable bit
+  1684                           ;	FCMEN = OFF, Fail-Safe Clock Monitor disabled
+  1685                           ;	Internal/External Oscillator Switchover bit
+  1686                           ;	IESO = OFF, Oscillator Switchover mode disabled
+  1687   300001                     	org	3145729
+  1688   300001  0C                 	db	12
+  1689                           
+  1690                           ;Config register CONFIG2L @ 0x300002
+  1691                           ;	Power-up Timer Enable bit
+  1692                           ;	PWRT = ON, PWRT enabled
+  1693                           ;	Brown-out Reset Enable bits
+  1694                           ;	BOR = ON, Brown-out Reset enabled in hardware only (SBOREN is disabled)
+  1695                           ;	Brown-out Reset Voltage bits
+  1696                           ;	BORV = 3, Minimum setting 2.05V
+  1697                           ;	USB Voltage Regulator Enable bit
+  1698                           ;	VREGEN = ON, USB voltage regulator enabled
+  1699   300002                     	org	3145730
+  1700   300002  3E                 	db	62
+  1701                           
+  1702                           ;Config register CONFIG2H @ 0x300003
+  1703                           ;	Watchdog Timer Enable bit
+  1704                           ;	WDT = ON, WDT enabled
+  1705                           ;	Watchdog Timer Postscale Select bits
+  1706                           ;	WDTPS = 32768, 1:32768
+  1707   300003                     	org	3145731
+  1708   300003  1F                 	db	31
+  1709                           
+  1710                           ; Padding undefined space
+  1711   300004                     	org	3145732
+  1712   300004  FF                 	db	255
+  1713                           
+  1714                           ;Config register CONFIG3H @ 0x300005
+  1715                           ;	CCP2 MUX bit
+  1716                           ;	CCP2MX = ON, CCP2 input/output is multiplexed with RC1
+  1717                           ;	PORTB A/D Enable bit
+  1718                           ;	PBADEN = ON, PORTB<4:0> pins are configured as analog input channels on Reset
+  1719                           ;	Low-Power Timer 1 Oscillator Enable bit
+  1720                           ;	LPT1OSC = OFF, Timer1 configured for higher power operation
+  1721                           ;	MCLR Pin Enable bit
+  1722                           ;	MCLRE = ON, MCLR pin enabled; RE3 input pin disabled
+  1723   300005                     	org	3145733
+  1724   300005  83                 	db	131
+  1725                           
+  1726                           ;Config register CONFIG4L @ 0x300006
+  1727                           ;	Stack Full/Underflow Reset Enable bit
+  1728                           ;	STVREN = ON, Stack full/underflow will cause Reset
+  1729                           ;	Single-Supply ICSP Enable bit
+  1730                           ;	LVP = ON, Single-Supply ICSP enabled
+  1731                           ;	Dedicated In-Circuit Debug/Programming Port (ICPORT) Enable bit
+  1732                           ;	ICPRT = OFF, ICPORT disabled
+  1733                           ;	Extended Instruction Set Enable bit
+  1734                           ;	XINST = OFF, Instruction set extension and Indexed Addressing mode disabled (Legacy mo
+      +                          de)
+  1735                           ;	Background Debugger Enable bit
+  1736                           ;	DEBUG = 0x1, unprogrammed default
+  1737   300006                     	org	3145734
+  1738   300006  85                 	db	133
+  1739                           
+  1740                           ; Padding undefined space
+  1741   300007                     	org	3145735
+  1742   300007  FF                 	db	255
+  1743                           
+  1744                           ;Config register CONFIG5L @ 0x300008
+  1745                           ;	Code Protection bit
+  1746                           ;	CP0 = OFF, Block 0 (000800-001FFFh) is not code-protected
+  1747                           ;	Code Protection bit
+  1748                           ;	CP1 = OFF, Block 1 (002000-003FFFh) is not code-protected
+  1749                           ;	Code Protection bit
+  1750                           ;	CP2 = OFF, Block 2 (004000-005FFFh) is not code-protected
+  1751                           ;	Code Protection bit
+  1752                           ;	CP3 = OFF, Block 3 (006000-007FFFh) is not code-protected
+  1753   300008                     	org	3145736
+  1754   300008  0F                 	db	15
+  1755                           
+  1756                           ;Config register CONFIG5H @ 0x300009
+  1757                           ;	Boot Block Code Protection bit
+  1758                           ;	CPB = OFF, Boot block (000000-0007FFh) is not code-protected
+  1759                           ;	Data EEPROM Code Protection bit
+  1760                           ;	CPD = OFF, Data EEPROM is not code-protected
+  1761   300009                     	org	3145737
+  1762   300009  C0                 	db	192
+  1763                           
+  1764                           ;Config register CONFIG6L @ 0x30000A
+  1765                           ;	Write Protection bit
+  1766                           ;	WRT0 = OFF, Block 0 (000800-001FFFh) is not write-protected
+  1767                           ;	Write Protection bit
+  1768                           ;	WRT1 = OFF, Block 1 (002000-003FFFh) is not write-protected
+  1769                           ;	Write Protection bit
+  1770                           ;	WRT2 = OFF, Block 2 (004000-005FFFh) is not write-protected
+  1771                           ;	Write Protection bit
+  1772                           ;	WRT3 = OFF, Block 3 (006000-007FFFh) is not write-protected
+  1773   30000A                     	org	3145738
+  1774   30000A  0F                 	db	15
+  1775                           
+  1776                           ;Config register CONFIG6H @ 0x30000B
+  1777                           ;	Configuration Register Write Protection bit
+  1778                           ;	WRTC = OFF, Configuration registers (300000-3000FFh) are not write-protected
+  1779                           ;	Boot Block Write Protection bit
+  1780                           ;	WRTB = OFF, Boot block (000000-0007FFh) is not write-protected
+  1781                           ;	Data EEPROM Write Protection bit
+  1782                           ;	WRTD = OFF, Data EEPROM is not write-protected
+  1783   30000B                     	org	3145739
+  1784   30000B  E0                 	db	224
+  1785                           
+  1786                           ;Config register CONFIG7L @ 0x30000C
+  1787                           ;	Table Read Protection bit
+  1788                           ;	EBTR0 = OFF, Block 0 (000800-001FFFh) is not protected from table reads executed in ot
+      +                          her blocks
+  1789                           ;	Table Read Protection bit
+  1790                           ;	EBTR1 = OFF, Block 1 (002000-003FFFh) is not protected from table reads executed in ot
+      +                          her blocks
+  1791                           ;	Table Read Protection bit
+  1792                           ;	EBTR2 = OFF, Block 2 (004000-005FFFh) is not protected from table reads executed in ot
+      +                          her blocks
+  1793                           ;	Table Read Protection bit
+  1794                           ;	EBTR3 = OFF, Block 3 (006000-007FFFh) is not protected from table reads executed in ot
+      +                          her blocks
+  1795   30000C                     	org	3145740
+  1796   30000C  0F                 	db	15
+  1797                           
+  1798                           ;Config register CONFIG7H @ 0x30000D
+  1799                           ;	Boot Block Table Read Protection bit
+  1800                           ;	EBTRB = OFF, Boot block (000000-0007FFh) is not protected from table reads executed in
+      +                           other blocks
+  1801   30000D                     	org	3145741
+  1802   30000D  40                 	db	64
+  1803                           tosu	equ	0xFFF
+  1804                           tosh	equ	0xFFE
+  1805                           tosl	equ	0xFFD
+  1806                           stkptr	equ	0xFFC
+  1807                           pclatu	equ	0xFFB
+  1808                           pclath	equ	0xFFA
+  1809                           pcl	equ	0xFF9
+  1810                           tblptru	equ	0xFF8
+  1811                           tblptrh	equ	0xFF7
+  1812                           tblptrl	equ	0xFF6
+  1813                           tablat	equ	0xFF5
+  1814                           prodh	equ	0xFF4
+  1815                           prodl	equ	0xFF3
+  1816                           indf0	equ	0xFEF
+  1817                           postinc0	equ	0xFEE
+  1818                           postdec0	equ	0xFED
+  1819                           preinc0	equ	0xFEC
+  1820                           plusw0	equ	0xFEB
+  1821                           fsr0h	equ	0xFEA
+  1822                           fsr0l	equ	0xFE9
+  1823                           wreg	equ	0xFE8
+  1824                           indf1	equ	0xFE7
+  1825                           postinc1	equ	0xFE6
+  1826                           postdec1	equ	0xFE5
+  1827                           preinc1	equ	0xFE4
+  1828                           plusw1	equ	0xFE3
+  1829                           fsr1h	equ	0xFE2
+  1830                           fsr1l	equ	0xFE1
+  1831                           bsr	equ	0xFE0
+  1832                           indf2	equ	0xFDF
+  1833                           postinc2	equ	0xFDE
+  1834                           postdec2	equ	0xFDD
+  1835                           preinc2	equ	0xFDC
+  1836                           plusw2	equ	0xFDB
+  1837                           fsr2h	equ	0xFDA
+  1838                           fsr2l	equ	0xFD9
+  1839                           status	equ	0xFD8
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         36
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMRAM           95     12      48
+    BANK0           160      0       0
+    BANK1           256      0       0
+    BANK2           256      0       0
+    BANK3           256      0       0
+    BANK4           256      0       0
+    BANK5           256      0       0
+    BANK6           256      0       0
+    BANK7           256      0       0
+
+Pointer List with Targets:
+
+    canRead@data	PTR unsigned char  size(2) Largest target is 2047
+		 -> RAM(DATA[2047]), dataRead(COMRAM[8]), 
+
+    canSend@data	PTR unsigned char  size(2) Largest target is 8
+		 -> dataSend(COMRAM[8]), 
+
+
+Critical Paths under _main in COMRAM
+
+    _main->_canSend
+    _hardware_ini->_mcp2515Start
+    _mcp2515Start->_delayMS
+    _mcp2515WriteRegister->_SPI_send
+    _mcp2515Reset->_delayUS
+    _canSend->_mcp2515BitChange
+    _mcp2515BitChange->_SPI_send
+    _canRead->_mcp2515ReadRegister
+    _mcp2515ReadRegister->_SPI_receive
+    _mcp2515ReadRegister->_SPI_send
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _main in BANK4
+
+    None.
+
+Critical Paths under _main in BANK5
+
+    None.
+
+Critical Paths under _main in BANK6
+
+    None.
+
+Critical Paths under _main in BANK7
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 0     0      0    6254
+                            _canRead
+                            _canSend
+                            _delayMS
+                       _hardware_ini
+ ---------------------------------------------------------------------------------
+ (1) _hardware_ini                                         0     0      0    3735
+                            _SPI_ini
+                            _delayMS
+                       _mcp2515Start
+ ---------------------------------------------------------------------------------
+ (2) _mcp2515Start                                         5     5      0    3263
+                                              6 COMRAM     5     5      0
+                            _delayMS
+                            _delayUS
+                   _mcp2515BitChange
+                _mcp2515ReadRegister
+                       _mcp2515Reset
+               _mcp2515WriteRegister
+ ---------------------------------------------------------------------------------
+ (3) _mcp2515WriteRegister                                 2     1      1     971
+                                              1 COMRAM     2     1      1
+                           _SPI_send
+ ---------------------------------------------------------------------------------
+ (3) _mcp2515Reset                                         0     0      0     289
+                           _SPI_send
+                            _delayUS
+ ---------------------------------------------------------------------------------
+ (4) _delayUS                                              4     2      2     274
+                                              0 COMRAM     4     2      2
+ ---------------------------------------------------------------------------------
+ (3) _delayMS                                              6     4      2     472
+                                              0 COMRAM     6     4      2
+ ---------------------------------------------------------------------------------
+ (2) _SPI_ini                                              1     1      0       0
+ ---------------------------------------------------------------------------------
+ (1) _canSend                                              8     4      4    1660
+                                              4 COMRAM     8     4      4
+                           _SPI_send
+                   _mcp2515BitChange
+ ---------------------------------------------------------------------------------
+ (3) _mcp2515BitChange                                     3     1      2     993
+                                              1 COMRAM     3     1      2
+                           _SPI_send
+ ---------------------------------------------------------------------------------
+ (1) _canRead                                              8     6      2     387
+                                              3 COMRAM     8     6      2
+                _mcp2515ReadRegister
+ ---------------------------------------------------------------------------------
+ (3) _mcp2515ReadRegister                                  2     2      0      60
+                                              1 COMRAM     2     2      0
+                        _SPI_receive
+                           _SPI_send
+ ---------------------------------------------------------------------------------
+ (4) _SPI_send                                             2     2      0      15
+                                              0 COMRAM     1     1      0
+ ---------------------------------------------------------------------------------
+ (4) _SPI_receive                                          1     1      0      15
+                                              0 COMRAM     1     1      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 4
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _canRead
+     _mcp2515ReadRegister
+       _SPI_receive
+       _SPI_send
+   _canSend
+     _SPI_send
+     _mcp2515BitChange
+       _SPI_send
+   _delayMS
+   _hardware_ini
+     _SPI_ini
+     _delayMS
+     _mcp2515Start
+       _delayMS
+       _delayUS
+       _mcp2515BitChange
+       _mcp2515ReadRegister
+       _mcp2515Reset
+         _SPI_send
+         _delayUS
+       _mcp2515WriteRegister
+         _SPI_send
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM             7FF      0       0      30        0.0%
+EEDATA             100      0       0       0        0.0%
+BITBANK7           100      0       0      18        0.0%
+BANK7              100      0       0      19        0.0%
+BITBANK6           100      0       0      16        0.0%
+BANK6              100      0       0      17        0.0%
+BITBANK5           100      0       0      14        0.0%
+BANK5              100      0       0      15        0.0%
+BITBANK4           100      0       0      12        0.0%
+BANK4              100      0       0      13        0.0%
+BITBANK3           100      0       0      10        0.0%
+BANK3              100      0       0      11        0.0%
+BITBANK2           100      0       0       8        0.0%
+BANK2              100      0       0       9        0.0%
+BITBANK1           100      0       0       6        0.0%
+BANK1              100      0       0       7        0.0%
+BITBANK0            A0      0       0       4        0.0%
+BANK0               A0      0       0       5        0.0%
+BITCOMRAM           5F      0       0       0        0.0%
+COMRAM              5F      C      30       1       50.5%
+BITBIGSFRhh         2C      0       0      20        0.0%
+BITBIGSFRhlhllh     22      0       0      24        0.0%
+BITBIGSFRll         20      0       0      28        0.0%
+BITBIGSFRhlhhh       9      0       0      21        0.0%
+BITBIGSFRlh          9      0       0      27        0.0%
+BITBIGSFRhlhlll      9      0       0      25        0.0%
+BITBIGSFRhll         7      0       0      26        0.0%
+BITBIGSFRhlhlh       3      0       0      23        0.0%
+BITBIGSFRhlhhl       1      0       0      22        0.0%
+BIGSFR               0      0       0     200        0.0%
+BITSFR               0      0       0     200        0.0%
+SFR                  0      0       0     200        0.0%
+STACK                0      0       0       2        0.0%
+NULL                 0      0       0       0        0.0%
+ABS                  0      0      30      29        0.0%
+DATA                 0      0      30       3        0.0%
+CODE                 0      0       0       0        0.0%
+
+
+Microchip Technology PIC18 Macro Assembler V2.40 build 20220703182018 
+Symbol Table                                                                                   Sun Mar 05 12:51:25 2023
+
+                 _SSPSTATbits 000FC7                            l51 5EC4                            l72 5DD8  
+                          l81 5DF2                            l84 5E46                            l98 62AC  
+                          l99 62AE                            u10 5E26                            u11 5E22  
+                          u30 5E06                            u31 5E02       mcp2515BitChange@maskBit 0026  
+                         l115 5E66                           l123 6158                           l132 615A  
+                         l145 6018                           l163 5E8E                           l157 5F0E  
+                         l190 5E2A                           l184 5DAA                           l193 5DF8  
+                         l195 5E06                           l187 5E18                           l196 5E0E  
+                         l189 5E26                           l953 5E12                           l963 5DF4  
+                         l955 5E14                           l965 5E0C                           u300 6234  
+                         u301 6230                           u310 6256                           u311 6252  
+                         u400 5FCE                           u320 6278                           u401 5FCA  
+                         u321 6274                           u410 6014                           u250 5E8E  
+                         u411 6010                           u251 5E8A                           u260 5EF4  
+                         u340 62AC                           u261 5EF0                           u341 62A8  
+                         u350 606E                           u270 5F0E                           u351 606A  
+                         u271 5F0A                           u335 6292                           u360 60CC  
+                         u361 60C8                           u370 612A                           u290 61BA  
+                         u371 6126                           u291 61B6                           u380 5F7C  
+                         u381 5F78                           u285 619E                           u390 5FB4  
+                         u391 5FB0                           wreg 000FE8                   _SPI_receive 5DF4  
+                        l1021 5E3C                          l1023 5E42                          l1015 5E2E  
+                        l1031 5DA8                          l1025 5E44                          l1017 5E30  
+                        l1019 5E36                          l1301 5E4C                          l1029 5D98  
+                        l1303 5E52                          l1311 5DDC                          l1305 5E58  
+                        l1401 6034                          l1313 5DDE                          l1321 615C  
+                        l1307 5E5E                          l1411 606E                          l1403 6040  
+                        l1315 5DE4                          l1331 6214                          l1323 6178  
+                        l1309 5E64                          l1421 609E                          l1413 6074  
+                        l1405 6048                          l1317 5DEA                          l1341 6224  
+                        l1325 6186                          l1431 60D2                          l1423 60A6  
+                        l1415 6086                          l1407 605A                          l1271 5E74  
+                        l1319 5DF0                          l1351 6244                          l1343 6234  
+                        l1327 6192                          l1441 6104                          l1433 60E4  
+                        l1425 60B8                          l1417 608C                          l1409 605C  
+                        l1273 5E78                          l1361 625A                          l1353 6246  
+                        l1337 6218                          l1329 61BA                          l1443 6116  
+                        l1435 60EA                          l1427 60BA                          l1419 6092  
+                        l1283 5EDA                          l1275 5EC6                          l1291 5DC2  
+                        l1363 6266                          l1355 6256                          l1339 6222  
+                        l1371 5E90                          l1461 5F84                          l1445 6118  
+                        l1437 60F0                          l1429 60CC                          l1453 6142  
+                        l1285 5EDE                          l1277 5ED2                          l1269 5E68  
+                        l1293 5DC4                          l1365 6268                          l1349 6238  
+                        l1381 5EA0                          l1373 5E98                          l1471 5FCE  
+                        l1463 5F8C                          l1455 5F66                          l1447 612A  
+                        l1439 60FC                          l1287 5EF4                          l1295 5DCA  
+                        l1367 6278                          l1391 5EB8                          l1383 5EA2  
+                        l1375 5E9A                          l1481 6002                          l1473 5FDC  
+                        l1465 5FA0                          l1457 5F66                          l1449 6130  
+                        l1393 601C                          l1289 5EF8                          l1297 5DD6  
+                        l1369 6286                          l1385 5EA4                          l1377 5E9C  
+                        l1475 5FE4                          l1483 6018                          l1467 5FA2  
+                        l1459 5F7C                          l1299 5E4A                          l1395 601E  
+                        l1387 5EA8                          l1379 5E9E                          l1491 5F1C  
+                        l1477 5FEC                          l1469 5FB8                          l1397 6028  
+                        l1389 5EB4                          l1493 5F32                          l1485 5F10  
+                        l1479 6000                          l1399 602E                          l1495 5F34  
+                        l1487 5F14                          l1497 5F40                          l1489 5F18  
+                        l1499 5F50                          _LATB 000F8A                ??_hardware_ini 0030  
+                        _main 5F10                          indf2 000FDF                          fsr2l 000FD9  
+             __end_of_SPI_ini 5DAC      mcp2515BitChange@valueNew 0027                          start 0000  
+                ___param_bank 000000                 mcp2515Start@i 002D                         ?_main 0025  
+             __end_of_canRead 601A               __end_of_canSend 615C                         _TRISB 000F93  
+             __end_of_delayMS 5F10               __end_of_delayUS 5E90              __end_of_SPI_send 5E2C  
+            _mcp2515BitChange 5E48                         status 000FD8               __initialization 5DAC  
+                __end_of_main 5F64                        ??_main 0031                 __activetblptr 000002  
+           mcp2515Start@i_398 002E             mcp2515Start@i_399 002F                        _ADCON0 000FC2  
+                      _ADCON1 000FC1                     ??_SPI_ini 0025                        _OSCCON 000FD3  
+                      _SSPBUF 000FC9                  _mcp2515Reset 5DC2                  _mcp2515Start 615C  
+                   ??_canRead 002A                     ??_canSend 002D                        clear_0 5DB2  
+                   ??_delayMS 0027                     ??_delayUS 0027          __end_of_hardware_ini 5EC6  
+                      isa$std 000001               SPI_receive@data 0025                        tblptru 000FF8  
+                  __accesstop 0060       __end_of__initialization 5DB8                 ___rparam_used 000001  
+              __pcstackCOMRAM 0025                  SPI_send@data 0025                     ?_SPI_send 0025  
+                ?_SPI_receive 0025           _mcp2515ReadRegister 5E2C      __end_of_mcp2515BitChange 5E68  
+                  canSend@txb 002D                    ??_SPI_send 0025                  canRead@i_426 002D  
+        ?_mcp2515ReadRegister 0025                       _SSPCON1 000FC6                       _SSPSTAT 000FC7  
+                     _SPI_ini 5D98                       __Hparam 0000            _canMessageReceived 0001  
+                     __Lparam 0000                  canSend@i_418 002F                  canSend@i_419 0030  
+                     _canRead 5F64                       _canSend 601A                       __pcinit 5DAC  
+                     _delayMS 5EC6                       _delayUS 5E68                       __ramtop 0800  
+                     __ptext0 5F10                       __ptext1 5E90                       __ptext2 615C  
+                     __ptext3 5DDA                       __ptext4 5DC2                       __ptext5 5E68  
+                     __ptext6 5EC6                       __ptext7 5D98                       __ptext8 601A  
+                     __ptext9 5E48         ??_mcp2515ReadRegister 0026     mcp2515ReadRegister@buffer 0027  
+        end_of_initialization 5DB8                  _hardware_ini 5E90                 __Lmediumconst 0000  
+  mcp2515ReadRegister@address 0026                       postinc0 000FEE                     _PORTAbits 000F80  
+                   _TRISAbits 000F92                     _TRISBbits 000F93                     _TRISCbits 000F94  
+              _canMessageSend 000B           start_initialization 5DAC  __end_of_mcp2515WriteRegister 5DF4  
+           ?_mcp2515BitChange 0026            ??_mcp2515BitChange 0028                   __pbssCOMRAM 0001  
+ mcp2515WriteRegister@address 0027                      ?_SPI_ini 0025                     canRead@id 002F  
+                   canSend@id 0029                      ?_canRead 0028                      ?_canSend 0029  
+                    ?_delayMS 0025                      ?_delayUS 0025                   canRead@data 0028  
+                 canSend@data 002B                     delayMS@ms 0029                      _LATBbits 000F8A  
+               ?_mcp2515Reset 0025                      _PIR1bits 000F9E                 ?_mcp2515Start 0025  
+               canRead@lenght 002E   __end_of_mcp2515ReadRegister 5E48          _mcp2515WriteRegister 5DDA  
+                    _SPI_send 5E10                ??_mcp2515Reset 0029                ??_mcp2515Start 002B  
+                    __Hrparam 0000                      __Lrparam 0000         ?_mcp2515WriteRegister 0026  
+               canSend@lenght 002A                      _dataRead 001D                      _dataSend 0015  
+  mcp2515BitChange@addressReg 0028                 ??_SPI_receive 0025                      canRead@i 002C  
+                    __ptext10 5F64                      __ptext11 5E2C                      __ptext12 5E10  
+                    __ptext13 5DF4                      canSend@i 002E                   delayMS@time 0025  
+                    delayMS@i 0027                   delayUS@time 0025                      delayUS@i 0027  
+   mcp2515WriteRegister@value 0026                      isa$xinst 000000           __end_of_SPI_receive 5E10  
+      ??_mcp2515WriteRegister 0027          __end_of_mcp2515Reset 5DDA          __end_of_mcp2515Start 62B0  
+               ?_hardware_ini 0025  

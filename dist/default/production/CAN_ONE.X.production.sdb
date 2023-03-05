@@ -1,0 +1,399 @@
+[p GLOBOPT AUTOSTATIC IEEE_FLT IEEE_DBL LFSROK EMI_WORD ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 18F4550 ]
+[d frameptr 4065 ]
+"4 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\fleq.c
+[v ___fleq __fleq `(b  1 e 0 0 ]
+"62 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\float.c
+[v ___ftpack __ftpack `(f  1 e 4 0 ]
+"86 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 4 0 ]
+"54 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 4 0 ]
+"62 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 4 0 ]
+"19 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\ftsub.c
+[v ___ftsub __ftsub `(f  1 e 4 0 ]
+"10 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"245
+[v ___flsub __flsub `(d  1 e 4 0 ]
+"11 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\sprcdiv.c
+[v ___fldiv __fldiv `(d  1 e 4 0 ]
+"8 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\sprcmul.c
+[v ___flmul __flmul `(d  1 e 4 0 ]
+"15 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\Umul32.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+"91 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\Umul64.c
+[v ___omul __omul `(ul  1 e 4 0 ]
+"25 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\can.c
+[v _mcp2515Reset mcp2515Reset `(v  1 e 1 0 ]
+"82
+[v _mcp2515WriteRegister mcp2515WriteRegister `(v  1 e 1 0 ]
+"98
+[v _mcp2515ReadRegister mcp2515ReadRegister `(uc  1 e 1 0 ]
+"138
+[v _mcp2515Start mcp2515Start `(v  1 e 1 0 ]
+"228
+[v _mcp2515BitChange mcp2515BitChange `(v  1 e 1 0 ]
+"246
+[v _canSend canSend `(v  1 e 1 0 ]
+"300
+[v _canRead canRead `(v  1 e 1 0 ]
+"16 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\delayMy.c
+[v _delayMS delayMS `(v  1 e 1 0 ]
+"29
+[v _delayUS delayUS `(v  1 e 1 0 ]
+"25 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\hardware.c
+[v _hardware_ini hardware_ini `(v  1 e 1 0 ]
+"22 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\main.c
+[v _main main `(v  1 e 1 0 ]
+"20 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\spi.c
+[v _SPI_ini SPI_ini `(v  1 e 1 0 ]
+"42
+[v _SPI_send SPI_send `(v  1 e 1 0 ]
+"62
+[v _SPI_receive SPI_receive `(uc  1 e 1 0 ]
+[s S201 . 1 `uc 1 RA0 1 0 :1:0 
+`uc 1 RA1 1 0 :1:1 
+`uc 1 RA2 1 0 :1:2 
+`uc 1 RA3 1 0 :1:3 
+`uc 1 RA4 1 0 :1:4 
+`uc 1 RA5 1 0 :1:5 
+`uc 1 RA6 1 0 :1:6 
+]
+"2354 C:/Program Files/Microchip/MPLABX/v6.05/packs/Microchip/PIC18Fxxxx_DFP/1.3.36/xc8\pic\include\proc\pic18f4550.h
+[s S274 . 1 `uc 1 AN0 1 0 :1:0 
+`uc 1 AN1 1 0 :1:1 
+`uc 1 AN2 1 0 :1:2 
+`uc 1 AN3 1 0 :1:3 
+`uc 1 T0CKI 1 0 :1:4 
+`uc 1 AN4 1 0 :1:5 
+`uc 1 OSC2 1 0 :1:6 
+]
+[s S282 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 VREFM 1 0 :1:2 
+`uc 1 VREFP 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 LVDIN 1 0 :1:5 
+]
+[s S288 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 HLVDIN 1 0 :1:5 
+]
+[s S291 . 1 `uc 1 ULPWUIN 1 0 :1:0 
+]
+[u S293 . 1 `S201 1 . 1 0 `S274 1 . 1 0 `S282 1 . 1 0 `S288 1 . 1 0 `S291 1 . 1 0 ]
+[v _PORTAbits PORTAbits `VES293  1 e 1 @3968 ]
+"3074
+[v _LATB LATB `VEuc  1 e 1 @3978 ]
+[s S40 . 1 `uc 1 LATB0 1 0 :1:0 
+`uc 1 LATB1 1 0 :1:1 
+`uc 1 LATB2 1 0 :1:2 
+`uc 1 LATB3 1 0 :1:3 
+`uc 1 LATB4 1 0 :1:4 
+`uc 1 LATB5 1 0 :1:5 
+`uc 1 LATB6 1 0 :1:6 
+`uc 1 LATB7 1 0 :1:7 
+]
+"3101
+[s S49 . 1 `uc 1 LB0 1 0 :1:0 
+`uc 1 LB1 1 0 :1:1 
+`uc 1 LB2 1 0 :1:2 
+`uc 1 LB3 1 0 :1:3 
+`uc 1 LB4 1 0 :1:4 
+`uc 1 LB5 1 0 :1:5 
+`uc 1 LB6 1 0 :1:6 
+`uc 1 LB7 1 0 :1:7 
+]
+[u S58 . 1 `S40 1 . 1 0 `S49 1 . 1 0 ]
+[v _LATBbits LATBbits `VES58  1 e 1 @3978 ]
+[s S193 . 1 `uc 1 TRISA0 1 0 :1:0 
+`uc 1 TRISA1 1 0 :1:1 
+`uc 1 TRISA2 1 0 :1:2 
+`uc 1 TRISA3 1 0 :1:3 
+`uc 1 TRISA4 1 0 :1:4 
+`uc 1 TRISA5 1 0 :1:5 
+`uc 1 TRISA6 1 0 :1:6 
+]
+"3458
+[u S209 . 1 `S193 1 . 1 0 `S201 1 . 1 0 ]
+[v _TRISAbits TRISAbits `VES209  1 e 1 @3986 ]
+"3626
+[v _TRISB TRISB `VEuc  1 e 1 @3987 ]
+[s S121 . 1 `uc 1 TRISB0 1 0 :1:0 
+`uc 1 TRISB1 1 0 :1:1 
+`uc 1 TRISB2 1 0 :1:2 
+`uc 1 TRISB3 1 0 :1:3 
+`uc 1 TRISB4 1 0 :1:4 
+`uc 1 TRISB5 1 0 :1:5 
+`uc 1 TRISB6 1 0 :1:6 
+`uc 1 TRISB7 1 0 :1:7 
+]
+"3658
+[s S130 . 1 `uc 1 RB0 1 0 :1:0 
+`uc 1 RB1 1 0 :1:1 
+`uc 1 RB2 1 0 :1:2 
+`uc 1 RB3 1 0 :1:3 
+`uc 1 RB4 1 0 :1:4 
+`uc 1 RB5 1 0 :1:5 
+`uc 1 RB6 1 0 :1:6 
+`uc 1 RB7 1 0 :1:7 
+]
+[u S139 . 1 `S121 1 . 1 0 `S130 1 . 1 0 ]
+[v _TRISBbits TRISBbits `VES139  1 e 1 @3987 ]
+[s S161 . 1 `uc 1 TRISC0 1 0 :1:0 
+`uc 1 TRISC1 1 0 :1:1 
+`uc 1 TRISC2 1 0 :1:2 
+`uc 1 . 1 0 :3:3 
+`uc 1 TRISC6 1 0 :1:6 
+`uc 1 TRISC7 1 0 :1:7 
+]
+"3876
+[s S168 . 1 `uc 1 RC0 1 0 :1:0 
+`uc 1 RC1 1 0 :1:1 
+`uc 1 RC2 1 0 :1:2 
+`uc 1 . 1 0 :3:3 
+`uc 1 RC6 1 0 :1:6 
+`uc 1 RC7 1 0 :1:7 
+]
+[u S175 . 1 `S161 1 . 1 0 `S168 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES175  1 e 1 @3988 ]
+[s S448 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 CCP1IF 1 0 :1:2 
+`uc 1 SSPIF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 SPPIF 1 0 :1:7 
+]
+"4493
+[s S457 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 TX1IF 1 0 :1:4 
+`uc 1 RC1IF 1 0 :1:5 
+`uc 1 . 1 0 :1:6 
+`uc 1 PSPIF 1 0 :1:7 
+]
+[u S463 . 1 `S448 1 . 1 0 `S457 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES463  1 e 1 @3998 ]
+"6582
+[v _ADCON1 ADCON1 `VEuc  1 e 1 @4033 ]
+"6667
+[v _ADCON0 ADCON0 `VEuc  1 e 1 @4034 ]
+"6869
+[v _SSPCON1 SSPCON1 `VEuc  1 e 1 @4038 ]
+"6939
+[v _SSPSTAT SSPSTAT `VEuc  1 e 1 @4039 ]
+[s S483 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R_NOT_W 1 0 :1:2 
+]
+"7022
+[s S486 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 D_NOT_A 1 0 :1:5 
+]
+[s S489 . 1 `uc 1 BF 1 0 :1:0 
+`uc 1 UA 1 0 :1:1 
+`uc 1 R_nW 1 0 :1:2 
+`uc 1 S 1 0 :1:3 
+`uc 1 P 1 0 :1:4 
+`uc 1 D_nA 1 0 :1:5 
+`uc 1 CKE 1 0 :1:6 
+`uc 1 SMP 1 0 :1:7 
+]
+[s S498 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R_W 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 D_A 1 0 :1:5 
+]
+[s S503 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 I2C_READ 1 0 :1:2 
+`uc 1 I2C_START 1 0 :1:3 
+`uc 1 I2C_STOP 1 0 :1:4 
+`uc 1 I2C_DAT 1 0 :1:5 
+]
+[s S509 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nW 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nA 1 0 :1:5 
+]
+[s S514 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 NOT_WRITE 1 0 :1:2 
+]
+[s S517 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 NOT_ADDRESS 1 0 :1:5 
+]
+[s S520 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nWRITE 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nADDRESS 1 0 :1:5 
+]
+[s S525 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 READ_WRITE 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 DATA_ADDRESS 1 0 :1:5 
+]
+[s S530 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 D 1 0 :1:5 
+]
+[s S535 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 RW 1 0 :1:2 
+`uc 1 START 1 0 :1:3 
+`uc 1 STOP 1 0 :1:4 
+`uc 1 DA 1 0 :1:5 
+]
+[s S541 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 NOT_W 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 NOT_A 1 0 :1:5 
+]
+[u S546 . 1 `S483 1 . 1 0 `S486 1 . 1 0 `S489 1 . 1 0 `S498 1 . 1 0 `S503 1 . 1 0 `S509 1 . 1 0 `S514 1 . 1 0 `S517 1 . 1 0 `S520 1 . 1 0 `S525 1 . 1 0 `S530 1 . 1 0 `S535 1 . 1 0 `S541 1 . 1 0 ]
+[v _SSPSTATbits SSPSTATbits `VES546  1 e 1 @4039 ]
+"7194
+[v _SSPBUF SSPBUF `VEuc  1 e 1 @4041 ]
+"7987
+[v _OSCCON OSCCON `VEuc  1 e 1 @4051 ]
+[s S24 . 10 `uc 1 idh 1 0 `uc 1 dlc 1 1 `[8]uc 1 data 8 2 ]
+"36 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\can.h
+[v _canMessageSend canMessageSend `S24  1 e 10 0 ]
+"18 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\main.c
+[v _dataRead dataRead `[8]uc  1 e 8 0 ]
+"19
+[v _dataSend dataSend `[8]uc  1 e 8 0 ]
+"22
+[v _main main `(v  1 e 1 0 ]
+{
+"72
+} 0
+"25 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\hardware.c
+[v _hardware_ini hardware_ini `(v  1 e 1 0 ]
+{
+"59
+} 0
+"138 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\can.c
+[v _mcp2515Start mcp2515Start `(v  1 e 1 0 ]
+{
+"173
+[v mcp2515Start@i_399 i `uc  1 a 1 10 ]
+"169
+[v mcp2515Start@i_398 i `uc  1 a 1 9 ]
+"166
+[v mcp2515Start@i i `uc  1 a 1 8 ]
+"183
+} 0
+"82
+[v _mcp2515WriteRegister mcp2515WriteRegister `(v  1 e 1 0 ]
+{
+[v mcp2515WriteRegister@address address `uc  1 a 1 wreg ]
+[v mcp2515WriteRegister@address address `uc  1 a 1 wreg ]
+[v mcp2515WriteRegister@value value `uc  1 p 1 1 ]
+"84
+[v mcp2515WriteRegister@address address `uc  1 a 1 2 ]
+"90
+} 0
+"25
+[v _mcp2515Reset mcp2515Reset `(v  1 e 1 0 ]
+{
+"32
+} 0
+"29 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\delayMy.c
+[v _delayUS delayUS `(v  1 e 1 0 ]
+{
+"31
+[v delayUS@i i `ui  1 a 2 2 ]
+"29
+[v delayUS@time time `ui  1 p 2 0 ]
+"32
+} 0
+"16
+[v _delayMS delayMS `(v  1 e 1 0 ]
+{
+"20
+[v delayMS@ms ms `ui  1 a 2 4 ]
+"18
+[v delayMS@i i `ui  1 a 2 2 ]
+"16
+[v delayMS@time time `ui  1 p 2 0 ]
+"23
+} 0
+"20 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\spi.c
+[v _SPI_ini SPI_ini `(v  1 e 1 0 ]
+{
+"35
+} 0
+"246 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\can.c
+[v _canSend canSend `(v  1 e 1 0 ]
+{
+[v canSend@txb txb `uc  1 a 1 wreg ]
+"282
+[v canSend@i_419 i `uc  1 a 1 11 ]
+"270
+[v canSend@i_418 i `uc  1 a 1 10 ]
+"258
+[v canSend@i i `uc  1 a 1 9 ]
+"246
+[v canSend@txb txb `uc  1 a 1 wreg ]
+[v canSend@id id `uc  1 p 1 4 ]
+[v canSend@lenght lenght `uc  1 p 1 5 ]
+[v canSend@data data `*.39uc  1 p 2 6 ]
+"248
+[v canSend@txb txb `uc  1 a 1 8 ]
+"292
+} 0
+"228
+[v _mcp2515BitChange mcp2515BitChange `(v  1 e 1 0 ]
+{
+[v mcp2515BitChange@addressReg addressReg `uc  1 a 1 wreg ]
+[v mcp2515BitChange@addressReg addressReg `uc  1 a 1 wreg ]
+[v mcp2515BitChange@maskBit maskBit `uc  1 p 1 1 ]
+[v mcp2515BitChange@valueNew valueNew `uc  1 p 1 2 ]
+"230
+[v mcp2515BitChange@addressReg addressReg `uc  1 a 1 3 ]
+"238
+} 0
+"300
+[v _canRead canRead `(v  1 e 1 0 ]
+{
+[v canRead@id id `uc  1 a 1 wreg ]
+"317
+[v canRead@i_426 i `uc  1 a 1 8 ]
+"307
+[v canRead@i i `uc  1 a 1 7 ]
+"302
+[v canRead@lenght lenght `uc  1 a 1 9 ]
+"300
+[v canRead@id id `uc  1 a 1 wreg ]
+[v canRead@data data `*.39uc  1 p 2 3 ]
+[v canRead@id id `uc  1 a 1 10 ]
+"326
+} 0
+"98
+[v _mcp2515ReadRegister mcp2515ReadRegister `(uc  1 e 1 0 ]
+{
+[v mcp2515ReadRegister@address address `uc  1 a 1 wreg ]
+"100
+[v mcp2515ReadRegister@buffer buffer `uc  1 a 1 2 ]
+"98
+[v mcp2515ReadRegister@address address `uc  1 a 1 wreg ]
+"101
+[v mcp2515ReadRegister@address address `uc  1 a 1 1 ]
+"109
+} 0
+"42 C:\Users\casti\OneDrive - Fatec Centro Paula Souza\BRIGUELA_ONE\CAN_ONE.X\spi.c
+[v _SPI_send SPI_send `(v  1 e 1 0 ]
+{
+[v SPI_send@data data `uc  1 a 1 wreg ]
+[v SPI_send@data data `uc  1 a 1 wreg ]
+"45
+[v SPI_send@data data `uc  1 a 1 0 ]
+"55
+} 0
+"62
+[v _SPI_receive SPI_receive `(uc  1 e 1 0 ]
+{
+"65
+[v SPI_receive@data data `uc  1 a 1 0 ]
+"75
+} 0
